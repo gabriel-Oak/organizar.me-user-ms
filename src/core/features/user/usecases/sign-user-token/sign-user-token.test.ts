@@ -1,6 +1,6 @@
 import { ISignUserTokenUsecase } from './types';
 import SignUserTokenUsecase from './sign-user-token';
-import UserModel from '../../models/user';
+import UserModel from '../../models/user-model';
 import { mock, mockReset } from 'jest-mock-extended';
 import { ICacheService } from '../../../../utils/services/cache-service/types';
 

@@ -3,7 +3,7 @@ import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from '../usecases/insert-user/types';
 import { IValidateUserUsecase, ValidateUserError } from '../usecases/validate-user/types';
 import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
-import UserModel, { UserProps } from '../models/user';
+import UserModel, { UserProps } from '../models/user-model';
 import UserController from './controller';
 import { Left, Right } from '../../../utils/types';
 import HttpError from '../../../utils/errors/http-error';

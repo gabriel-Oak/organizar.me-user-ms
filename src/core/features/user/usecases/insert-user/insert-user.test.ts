@@ -1,7 +1,7 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserModel, { UserProps } from '../../models/user';
+import UserModel, { UserProps } from '../../models/user-model';
 import InsertUserUsecase from './insert-user';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from './types';
 

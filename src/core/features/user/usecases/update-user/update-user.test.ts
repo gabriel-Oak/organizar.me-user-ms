@@ -1,7 +1,7 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserModel from '../../models/user';
+import UserModel from '../../models/user-model';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from './types';
 import UpdateUserUsecase from './update-user';
 

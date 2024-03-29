@@ -3,7 +3,7 @@ import { IInternalUserDatasource, InternalUserDatasourceError } from '../../data
 import { AuthenticateInvalidError, AuthenticateUserNotFoundError, AuthenticateUserWrongPasswordError, IAuthenticateUserUsecase, LoginPayload } from './types'
 import AuthenticateUserUsecase from './authenticate-user'
 import { Left, Right } from '../../../../utils/types';
-import UserModel from '../../models/user';
+import UserModel from '../../models/user-model';
 
 describe('AuthenticateUserUsecase Tests', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
