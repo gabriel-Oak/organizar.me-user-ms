@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import controller from '../../../utils/controller/decorators/controller';
 import post from '../../../utils/controller/decorators/post';
 import HttpError from '../../../utils/errors/http-error';
-import User, { UserProps } from '../models/user';
+import UserModel, { UserProps } from '../models/user-model';
 import { IAuthenticateUserUsecase, LoginPayload } from '../usecases/authenticate-user/types';
 import { IDecodeUserTokenUsecase } from '../usecases/decode-user-token/types';
 import { IInsertUserUsecase } from '../usecases/insert-user/types';
@@ -90,7 +90,7 @@ export default class UserController {
 
   @patch('/change-password')
   @privateRoute()
-  async changeUserPassword(req: FastifyRequest, reply: FastifyReply, user: User) {
+  async changeUserPassword(req: FastifyRequest, reply: FastifyReply, user: UserModel) {
     const { body } = req as { body: ChangePasswordBody };
     const result = await this.changePassword.execute({
       ...body,
@@ -107,7 +107,7 @@ export default class UserController {
 
   @put('/update-user')
   @privateRoute()
-  async update(req: FastifyRequest, reply: FastifyReply, user: User) {
+  async update(req: FastifyRequest, reply: FastifyReply, user: UserModel) {
     const { body } = req as { body: updateUserProps };
     const result = await this.updateUser.execute(user, body);
     if (!result.isError) return await reply.send();

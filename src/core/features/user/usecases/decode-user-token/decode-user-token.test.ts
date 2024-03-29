@@ -3,7 +3,7 @@ import { IInternalUserDatasource, InternalUserDatasourceError } from '../../data
 import { DecodeUserInvalidTokenError, DecodeUserNotFoundError, IDecodeUserTokenUsecase } from './types';
 import DecodeUserTokenDatasource from './decode-user-token';
 import { Left, Right } from '../../../../utils/types';
-import User from '../../models/user';
+import UserModel from '../../models/user';
 import { sign } from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
 
@@ -40,10 +40,10 @@ describe('DecodeUserTokenUsecase Test', () => {
   });
 
   it('Should decode succefuly', async () => {
-    userDatasourceMock.findById.mockImplementation(async () => new Right(new User()));
+    userDatasourceMock.findById.mockImplementation(async () => new Right(new UserModel()));
     const result = await usecase.execute(token);
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 });

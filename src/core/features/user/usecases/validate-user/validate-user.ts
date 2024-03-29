@@ -1,6 +1,6 @@
 import { z, ZodError, ZodIssue } from 'zod';
 import { Left, Right } from '../../../../utils/types';
-import { UserProps } from '../../models/user';
+import { UserProps } from '../../models/user-model';
 import { IValidateUserUsecase, ValidateUserError } from './types';
 
 export default class ValidateUserUsecase implements IValidateUserUsecase {

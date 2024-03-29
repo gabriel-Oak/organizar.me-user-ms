@@ -1,6 +1,6 @@
 import { Left } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import User from '../../models/user';
+import UserModel from '../../models/user-model';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError, updateUserProps } from './types';
 
 export default class UpdateUserUsecase implements IUpdateUserUsecase {
@@ -8,7 +8,7 @@ export default class UpdateUserUsecase implements IUpdateUserUsecase {
     private readonly userDatasource: IInternalUserDatasource
   ) {}
 
-  async execute(user: User, payload: updateUserProps) {
+  async execute(user: UserModel, payload: updateUserProps) {
     const passIsValid = payload.password && await user.comparePasswords(payload.password);
     if (!passIsValid) return new Left(new UpdateUserInvalidPassError());
 

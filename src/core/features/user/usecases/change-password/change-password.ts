@@ -24,6 +24,6 @@ export default class ChangePasswordUsecase implements IChangePasswordUsecase {
     const insertResult = await this.userDatasource.update(user);
     if (insertResult.isError) return insertResult;
 
-    return new Right('User password has been successfully updated');
+    return new Right('UserModel password has been successfully updated');
   }
 }

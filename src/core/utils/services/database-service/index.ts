@@ -1,23 +1,23 @@
 import { DataSource } from 'typeorm'
-import Cocktail from '../../../features/cocktail/models/cocktail';
-import CocktailIngredient from '../../../features/cocktail/models/measure';
-import Ingredient from '../../../features/cocktail/models/ingredient';
-import { POSTGRE_HOST, POSTGRE_PASS, POSTGRE_PORT, POSTGRE_USER } from '../../constants';
+import {
+  MONGODB_DATABASE,
+  MONGODB_HOST,
+  MONGODB_PASS,
+  MONGODB_PORT,
+  MONGODB_USER
+} from '../../constants';
 import createLoggerService from '../logger';
-import User from '../../../features/user/models/user';
+import UserModel from '../../../features/user/models/user-model';
 
 const DatabaseService = new DataSource({
-  type: 'postgres',
-  host: POSTGRE_HOST,
-  port: +POSTGRE_PORT!,
-  username: POSTGRE_USER,
-  password: POSTGRE_PASS,
-  database: POSTGRE_USER,
+  type: 'mongodb',
+  host: MONGODB_HOST,
+  port: +MONGODB_PORT!,
+  username: MONGODB_DATABASE,
+  password: MONGODB_PASS,
+  database: MONGODB_USER,
   entities: [
-    CocktailIngredient,
-    Ingredient,
-    Cocktail,
-    User
+    UserModel
   ],
   synchronize: true
 });

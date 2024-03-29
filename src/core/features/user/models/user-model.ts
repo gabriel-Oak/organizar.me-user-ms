@@ -11,7 +11,7 @@ export interface UserProps {
 }
 
 @Entity()
-export default class User implements UserProps {
+export default class UserModel implements UserProps {
   @PrimaryGeneratedColumn('uuid')
   public id?: string;
 

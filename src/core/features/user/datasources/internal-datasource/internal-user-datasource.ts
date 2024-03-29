@@ -1,12 +1,12 @@
 import { ILoggerService } from '../../../../utils/services/logger/types';
 import { Left, Right } from '../../../../utils/types';
 import { Repository } from 'typeorm';
-import User from '../../models/user';
+import UserModel from '../../models/user-model';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 
 export default class InternalUserDatasource implements IInternalUserDatasource {
   constructor(
-    private readonly userRepository: Repository<User>,
+    private readonly userRepository: Repository<UserModel>,
     private readonly logger: ILoggerService
   ) { }
 
@@ -55,7 +55,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async save(user: User) {
+  async save(user: UserModel) {
     try {
       const result = await this.userRepository.save(user);
       result.password = undefined;
@@ -70,7 +70,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async update(user: User) {
+  async update(user: UserModel) {
     try {
       await this.userRepository.update(user.id!, user);
       return new Right(null);

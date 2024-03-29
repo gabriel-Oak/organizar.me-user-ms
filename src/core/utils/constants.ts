@@ -1,13 +1,8 @@
-export const COCKTAIL_API = process.env.COCKTAIL_API as string;
-
-export const TRANSLATE_API = process.env.TRANSLATE_API as string;
-export const TRANSLATE_API_KEY = process.env.TRANSLATE_API_KEY as string;
-
-export const POSTGRE_HOST = process.env.POSTGRE_HOST;
-export const POSTGRE_USER = process.env.POSTGRE_USER;
-export const POSTGRE_PASS = process.env.POSTGRE_PASS;
-export const POSTGRE_PORT = process.env.POSTGRE_PORT;
-export const POSTGRE_DB = process.env.POSTGRE_DB;
+export const MONGODB_HOST = process.env.MONGODB_HOST;
+export const MONGODB_USER = process.env.MONGODB_USER;
+export const MONGODB_PASS = process.env.MONGODB_PASS;
+export const MONGODB_PORT = process.env.MONGODB_PORT;
+export const MONGODB_DATABASE = process.env.MONGODB_DATABASE;
 
 export const REDIS_PORT = process.env.REDIS_PORT;
 export const REDIS_HOST = process.env.REDIS_HOST;

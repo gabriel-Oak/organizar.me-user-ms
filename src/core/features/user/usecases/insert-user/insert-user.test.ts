@@ -1,7 +1,7 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import User, { UserProps } from '../../models/user';
+import UserModel, { UserProps } from '../../models/user';
 import InsertUserUsecase from './insert-user';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from './types';
 
@@ -21,7 +21,7 @@ describe('InsertUserUsecase Tests', () => {
   });
 
   it('Should return InsertUserAlreadyExist', async () => {
-    datasourceMock.findByEmailOrUsername.mockImplementation(async () => new Right(new User()));
+    datasourceMock.findByEmailOrUsername.mockImplementation(async () => new Right(new UserModel()));
     const result = await usecase.execute(payloadMock);
 
     expect(result).toBeInstanceOf(Left);
@@ -37,10 +37,10 @@ describe('InsertUserUsecase Tests', () => {
   });
 
   it('Should insert user', async () => {
-    datasourceMock.save.mockImplementation(async () => new Right(new User(payloadMock)));
+    datasourceMock.save.mockImplementation(async () => new Right(new UserModel(payloadMock)));
     const result = await usecase.execute(payloadMock);
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 });

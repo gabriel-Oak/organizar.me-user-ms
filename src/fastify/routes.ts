@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import createUserController from '../core/features/user/controller';
-import buildRoutes from '../core/u../core/features/user/controller
 import HttpError from '../core/utils/errors/http-error';
+import buildRoutes from '../core/utils/controller/build-routes';
 
 const createRouter = (app: FastifyInstance) => {
   buildRoutes(app, [

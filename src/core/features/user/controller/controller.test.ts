@@ -3,7 +3,7 @@ import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from '../usecases/insert-user/types';
 import { IValidateUserUsecase, ValidateUserError } from '../usecases/validate-user/types';
 import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
-import User, { UserProps } from '../models/user';
+import UserModel, { UserProps } from '../models/user';
 import UserController from './controller';
 import { Left, Right } from '../../../utils/types';
 import HttpError from '../../../utils/errors/http-error';
@@ -33,7 +33,7 @@ describe('UserController Tests', () => {
   const changePasswordMock = mock<IChangePasswordUsecase>();
   const updateUserMock = mock<IUpdateUserUsecase>();
 
-  const userMock = new User({ ...body, password: undefined });
+  const userMock = new UserModel({ ...body, password: undefined });
   const auth = 'iaehdiosahd8aksjhdjahsd8hjsakh.ajsihdkasdkashdkhaskdjhaksd.jkasdjkhaskdhaksdhkasjdha';
 
   const controller = new UserController(
@@ -80,7 +80,7 @@ describe('UserController Tests', () => {
 
     expect(replyMock.code).toHaveBeenCalledWith(409);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
-      message: 'User already exist, try a different email or usernal',
+      message: 'UserModel already exist, try a different email or usernal',
       statusCode: 409
     }));
   });
@@ -89,13 +89,13 @@ describe('UserController Tests', () => {
     validateUserMock.execute
       .mockImplementation(() => new Right(null));
     insertUserMock.execute
-      .mockImplementation(async () => new Right(new User({ ...body, password: undefined })));
+      .mockImplementation(async () => new Right(new UserModel({ ...body, password: undefined })));
     signUserTokenMock.execute
       .mockImplementation(() => auth);
     await controller.new(requestMock, replyMock);
 
     expect(replyMock.send).toHaveBeenCalledWith({
-      user: new User({ ...body, password: undefined }),
+      user: new UserModel({ ...body, password: undefined }),
       auth
     });
   });

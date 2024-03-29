@@ -1,15 +1,15 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Repository } from 'typeorm';
-import User from '../../models/user';
+import UserModel from '../../models/user';
 import { ILoggerService } from '../../../../utils/services/logger/types';
 import InternalUserDatasource from './internal-user-datasource';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import { Left, Right } from '../../../../utils/types';
 
 describe('InternalUserDatasource Tests', () => {
-  const repositoryMock = mock<Repository<User>>();
+  const repositoryMock = mock<Repository<UserModel>>();
   const loggerMock = mock<ILoggerService>();
-  const userMock = new User();
+  const userMock = new UserModel();
 
   const datasource: IInternalUserDatasource = new InternalUserDatasource(
     repositoryMock,
@@ -26,7 +26,7 @@ describe('InternalUserDatasource Tests', () => {
     const result = await datasource.findByEmail('hiremexteamplsohmygod@gmaiu.com');
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
   it('Should handle error finding by email', async () => {
@@ -45,7 +45,7 @@ describe('InternalUserDatasource Tests', () => {
     });
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
   it('Should handle error finding by email or username', async () => {
@@ -64,7 +64,7 @@ describe('InternalUserDatasource Tests', () => {
     const result = await datasource.findById('hiremexteamplsohmygod@gmaiu.com');
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
   it('Should handle error finding by id', async () => {
@@ -76,11 +76,11 @@ describe('InternalUserDatasource Tests', () => {
   });
 
   it('Should save user', async () => {
-    repositoryMock.save.mockImplementation(async (u) => u as User);
+    repositoryMock.save.mockImplementation(async (u) => u as UserModel);
     const result = await datasource.save(userMock);
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
   it('Should handle error saving user', async () => {
@@ -108,11 +108,11 @@ describe('InternalUserDatasource Tests', () => {
 
   it('Should remove user', async () => {
     repositoryMock.findOneBy.mockImplementation(async () => userMock);
-    repositoryMock.remove.mockImplementation(async (u: User) => u);
+    repositoryMock.remove.mockImplementation(async (u: UserModel) => u);
     const result = await datasource.remove('hsiuhdiusadhiudas-iasdhaishdi-haisdhiuash');
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
   it('Should handle error removing user', async () => {

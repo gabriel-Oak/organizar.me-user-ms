@@ -1,6 +1,6 @@
 import { Left } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import User, { UserProps } from '../../models/user';
+import UserModel, { UserProps } from '../../models/user-model';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from './types';
 
 export default class InsertUserUsecase implements IInsertUserUsecase {
@@ -11,7 +11,7 @@ export default class InsertUserUsecase implements IInsertUserUsecase {
     if (existResult.isError) return existResult;
     if (existResult.success) return new Left(new InsertUserAlreadyExist());
 
-    const userResult = await this.userDatasource.save(new User(user));
+    const userResult = await this.userDatasource.save(new UserModel(user));
     return userResult;
   }
 }

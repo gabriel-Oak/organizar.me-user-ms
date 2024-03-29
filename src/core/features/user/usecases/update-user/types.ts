@@ -1,7 +1,7 @@
 import BaseError from '../../../../utils/errors/base-error';
 import { Either } from '../../../../utils/types';
 import { InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import User, { UserProps } from '../../models/user';
+import UserModel, { UserProps } from '../../models/user-model';
 
 export class UpdateUserInvalidPassError extends BaseError {
   public readonly type = 'update-user-invalid-pass';
@@ -17,5 +17,5 @@ export type updateUserErrors = UpdateUserInvalidPassError
 export type updateUserProps = Partial<Omit<UserProps, 'id'>>;
 
 export interface IUpdateUserUsecase {
-  execute: (user: User, payload: updateUserProps) => Promise<Either<updateUserErrors, null>>;
+  execute: (user: UserModel, payload: updateUserProps) => Promise<Either<updateUserErrors, null>>;
 }

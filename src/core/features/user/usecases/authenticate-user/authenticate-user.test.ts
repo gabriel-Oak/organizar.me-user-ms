@@ -3,7 +3,7 @@ import { IInternalUserDatasource, InternalUserDatasourceError } from '../../data
 import { AuthenticateInvalidError, AuthenticateUserNotFoundError, AuthenticateUserWrongPasswordError, IAuthenticateUserUsecase, LoginPayload } from './types'
 import AuthenticateUserUsecase from './authenticate-user'
 import { Left, Right } from '../../../../utils/types';
-import User from '../../models/user';
+import UserModel from '../../models/user';
 
 describe('AuthenticateUserUsecase Tests', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
@@ -12,7 +12,7 @@ describe('AuthenticateUserUsecase Tests', () => {
     email: 'hellomyboy@gmail.com',
     password: '123ohmygod'
   };
-  const userMock = new User({
+  const userMock = new UserModel({
     ...payloadMock,
     name: 'Jhon Doe',
     username: 'jhon123'
@@ -58,7 +58,7 @@ describe('AuthenticateUserUsecase Tests', () => {
     const result = await usecase.execute(payloadMock);
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(User);
+    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
   it('Should return invalid data error', async () => {

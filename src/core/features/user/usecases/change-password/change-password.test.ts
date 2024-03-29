@@ -1,13 +1,13 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import User from '../../models/user';
+import UserModel from '../../models/user';
 import ChangePasswordUsecase from './change-password';
 import { ChangePasswordInvalidOldPassError, ChangePasswordInvalidPassError, IChangePasswordUsecase } from './types';
 
 describe('ChangePasswordUsecase Tests', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
-  const userMock = mock<User>();
+  const userMock = mock<UserModel>();
   const payloadMock = {
     userId: userMock.id!,
     oldPassword: 'dsuihfi',
