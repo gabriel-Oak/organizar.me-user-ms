@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { DataSource } from 'typeorm'
 import {
   MONGODB_DATABASE,
@@ -11,11 +12,7 @@ import UserModel from '../../../features/user/models/user-model';
 
 const DatabaseService = new DataSource({
   type: 'mongodb',
-  host: MONGODB_HOST,
-  port: +MONGODB_PORT!,
-  username: MONGODB_DATABASE,
-  password: MONGODB_PASS,
-  database: MONGODB_USER,
+  url: `mongodb://${MONGODB_USER}:${MONGODB_PASS}@${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DATABASE}?authSource=admin`,
   entities: [
     UserModel
   ],
