@@ -1,6 +1,6 @@
 import { KeyType } from 'crypto';
 import { Redis as RedisClient } from 'ioredis';
-import { ILoggerService } from '../logger/types';
+import { ILoggerService } from '../logger-service/types';
 import { ICacheService } from './types';
 
 export default class CacheService implements ICacheService {

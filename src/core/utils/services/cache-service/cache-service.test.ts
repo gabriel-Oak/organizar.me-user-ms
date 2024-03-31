@@ -1,6 +1,6 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Redis as RedisClient } from 'ioredis';
-import { ILoggerService } from '../logger/types';
+import { ILoggerService } from '../logger-service/types';
 import CacheService from './cache-service';
 
 describe('CacheService Tests', () => {

@@ -1,4 +1,4 @@
-import { ILoggerService } from '../../../../utils/services/logger/types';
+import { ILoggerService } from '../../../../utils/services/logger-service/types';
 import { Left, Right } from '../../../../utils/types';
 import { Repository } from 'typeorm';
 import UserModel from '../../models/user-model';

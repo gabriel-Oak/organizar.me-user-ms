@@ -1,5 +1,5 @@
 import { createLogger } from 'winston';
-import LoggerService from './logger';
+import LoggerService from './logger-service';
 import { ILoggerService } from './types';
 
 let instance: ILoggerService;

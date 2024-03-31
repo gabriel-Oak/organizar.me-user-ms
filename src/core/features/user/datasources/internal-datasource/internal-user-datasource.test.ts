@@ -1,7 +1,7 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Repository } from 'typeorm';
 import UserModel from '../../models/user-model';
-import { ILoggerService } from '../../../../utils/services/logger/types';
+import { ILoggerService } from '../../../../utils/services/logger-service/types';
 import InternalUserDatasource from './internal-user-datasource';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import { Left, Right } from '../../../../utils/types';

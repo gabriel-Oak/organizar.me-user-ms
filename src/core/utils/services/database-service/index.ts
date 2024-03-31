@@ -7,7 +7,7 @@ import {
   MONGODB_PORT,
   MONGODB_USER
 } from '../../constants';
-import createLoggerService from '../logger';
+import createLoggerService from '../logger-service';
 import UserModel from '../../../features/user/models/user-model';
 
 const DatabaseService = new DataSource({

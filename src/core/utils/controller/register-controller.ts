@@ -3,7 +3,7 @@ import UserModel from '../../features/user/models/user-model';
 import createDecodeUserTokenUsecase from '../../features/user/usecases/decode-user-token';
 import { decodeUserTokenErrors } from '../../features/user/usecases/decode-user-token/types';
 import HttpError from '../errors/http-error';
-import createLoggerService from '../services/logger';
+import createLoggerService from '../services/logger-service';
 import { Either } from '../types';
 import { SYMBOL_DELETE, SYMBOL_GET, SYMBOL_PATCH, SYMBOL_POST, SYMBOL_PRIVATE, SYMBOL_PUT } from './decorators/symbols';
 import { controllerAction, IControllerActionMeta } from './types';

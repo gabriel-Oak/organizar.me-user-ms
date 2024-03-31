@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from 'fastify';
 import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IApiAuthMiddleware } from './types';
 import ApiAuthMiddleware from './api-auth-middleware';
-import { ILoggerService } from '../../services/logger/types';
+import { ILoggerService } from '../../services/logger-service/types';
 import HttpError from '../../errors/http-error';
 import { API_TOKEN } from '../../constants';
 

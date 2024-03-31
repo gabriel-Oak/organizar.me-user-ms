@@ -1,6 +1,6 @@
 import { env } from 'process';
-import createLoggerService from '../core/utils/services/logger';
 import createApp from './app';
+import createLoggerService from '../core/utils/services/logger-service';
 
 export default async function startServerF() {
   const logger = createLoggerService();
@@ -10,4 +10,5 @@ export default async function startServerF() {
     .catch((e) => logger.error('Error starting server', e));
 
   logger.info(`Server started at port ${port}`);
+  return app;
 }

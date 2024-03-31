@@ -1,4 +1,4 @@
-import createLoggerService from '../../services/logger';
+import createLoggerService from '../../services/logger-service';
 import ApiAuthMiddleware from './api-auth-middleware';
 import { IApiAuthMiddleware } from './types';
 

@@ -2,7 +2,7 @@ import { IInternalUserDatasource } from './types';
 import InternalUserDatasource from './internal-user-datasource';
 import DatabaseService from '../../../../utils/services/database-service';
 import UserModel from '../../models/user-model';
-import createLoggerService from '../../../../utils/services/logger';
+import createLoggerService from '../../../../utils/services/logger-service';
 
 let instance: IInternalUserDatasource;
 

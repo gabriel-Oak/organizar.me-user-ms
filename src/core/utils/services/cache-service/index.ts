@@ -1,6 +1,6 @@
 import Redis from 'ioredis';
 import { REDIS_HOST, REDIS_PASS, REDIS_PORT } from '../../constants';
-import createLoggerService from '../logger';
+import createLoggerService from '../logger-service';
 import CacheService from './cache-service';
 import { ICacheService } from './types';
 

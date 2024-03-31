@@ -1,7 +1,7 @@
 import './fastify/config';
 import 'reflect-metadata';
 import startServer from './fastify/server';
-import createLoggerService from './core/utils/services/logger';
+import createLoggerService from './core/utils/services/logger-service';
 
 const logger = createLoggerService();
 startServer()

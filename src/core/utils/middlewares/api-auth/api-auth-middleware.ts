@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { IApiAuthMiddleware } from './types';
 import { API_TOKEN } from '../../constants';
-import { ILoggerService } from '../../services/logger/types';
+import { ILoggerService } from '../../services/logger-service/types';
 import HttpError from '../../errors/http-error';
 import autoBind from '../../helpers/auto-bind';
 
