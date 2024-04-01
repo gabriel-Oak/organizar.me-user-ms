@@ -1,15 +1,5 @@
 {
-  "builds": [
-    {
-      "src": "public/api/index.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "public/**"
-        ]
-      }
-    }
-  ],
+  
   "routes": [
     {
       "src": "/(.*)",
