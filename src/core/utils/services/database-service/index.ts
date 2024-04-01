@@ -1,19 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { DataSource, Repository } from 'typeorm'
-import {
-  MONGODB_DATABASE,
-  MONGODB_HOST,
-  MONGODB_PASS,
-  MONGODB_PORT,
-  MONGODB_USER
-} from '../../constants';
+import { MONGODB_URI } from '../../constants';
 import UserModel from '../../../features/user/models/user-model';
 import createContainer from '../../decorators/container';
 import { ILoggerService } from '../logger-service/types';
 
 const DatabaseService = new DataSource({
   type: 'mongodb',
-  url: `mongodb://${MONGODB_USER}:${MONGODB_PASS}@${MONGODB_HOST}:${MONGODB_PORT}/${MONGODB_DATABASE}?authSource=admin`,
+  url: MONGODB_URI,
   entities: [
     UserModel
   ],

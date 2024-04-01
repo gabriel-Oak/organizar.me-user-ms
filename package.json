@@ -8,7 +8,7 @@
     "tdd": "npm test -- --watch",
     "coverage": "npm test -- --coverage --passWithNoTests",
     "dev": "npx nodemon",
-    "build": "rimraf ./public && node ./node_modules/typescript/lib/tsc.js --project tsconfig.build.json",
+    "build": "npm test && rimraf ./public && node ./node_modules/typescript/lib/tsc.js --project tsconfig.build.json",
     "start": "npm run build && node public/index.js",
     "lint": "eslint -c .eslintrc.json ./src/**/*.ts --fix",
     "prepare": "npx husky install"
