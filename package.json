@@ -9,7 +9,7 @@
     "coverage": "npm test -- --coverage --passWithNoTests",
     "dev": "npx nodemon",
     "build": "rimraf ./public && node ./node_modules/typescript/lib/tsc.js --project tsconfig.build.json && npm run sentry:sourcemaps",
-    "start": "npm run build && node public/index.js",
+    "start": "node public/index.js",
     "lint": "eslint -c .eslintrc.json ./src/**/*.ts --fix",
     "prepare": "npx husky install",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org smn-official --project organizarme-user-ms ./public && sentry-cli sourcemaps upload --org smn-official --project organizarme-user-ms ./public"
