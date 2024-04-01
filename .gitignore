@@ -3,4 +3,3 @@ dist/
 coverage/
 .env
 .vercel
-public

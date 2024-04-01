@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.SYMBOL_PRIVATE = exports.SYMBOL_DELETE = exports.SYMBOL_PUT = exports.SYMBOL_PATCH = exports.SYMBOL_POST = exports.SYMBOL_GET = exports.SYMBOL_CONTROLLER = void 0;
+exports.SYMBOL_CONTROLLER = Symbol('CONTROLLER');
+exports.SYMBOL_GET = Symbol('GET');
+exports.SYMBOL_POST = Symbol('POST');
+exports.SYMBOL_PATCH = Symbol('PATCH');
+exports.SYMBOL_PUT = Symbol('PUT');
+exports.SYMBOL_DELETE = Symbol('DELETE');
+exports.SYMBOL_PRIVATE = Symbol('PRIVATE');

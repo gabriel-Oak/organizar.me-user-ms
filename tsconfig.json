@@ -15,6 +15,7 @@
   "exclude": [
     "jest.config.js",
     "coverage/",
-    "**/*.test.*"
+    "**/*.test.*",
+    "public"
   ]
 }

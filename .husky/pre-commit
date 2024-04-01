@@ -3,3 +3,5 @@
 
 npm run coverage
 npx lint-staged
+npm run build
+git add public/ --force
