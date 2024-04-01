@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Stash changes
+git stash -q --keep-index
+
+echo "Buildando a aplicação 🤓"
+npm run build
+status=$?
+git add public/ --force
+git commit -m "chore: build application"
+
+git stash pop --index -q
+
+if [ "$status" = 0 ] ; then
+    echo -e "\e[32mBuild executado com sucesso! 😎\e[0m"
+else
+    echo -e "\e[31mErro, tivemos algum problema 😢\e[0m"
+    #Exit
+    exit 1
+fi
+
+exit 0

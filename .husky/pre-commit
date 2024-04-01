@@ -1,7 +1,27 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+echo "Executando testes 🧪"
 npm run coverage
+status=$?
+
+if [ "$status" = 0 ] ; then
+    echo -e "\e[32mTodos os testes passaram 😎\e[0m"
+else
+    echo -e "\e[31mErro, alguns testes falharam 😢\e[0m"
+    #Exit
+    exit 1
+fi
+
+echo "Executando eslint 🔎"
 npx lint-staged
-npm run build
-git add public/ --force
+status=$?
+
+if [ "$status" = 0 ] ; then
+    echo -e "\e[32mNenhum problema encontrado 🤓\e[0m"
+else
+    echo -e "\e[31mEslint encontrou problemas que não conseguiu resolver 😫\e[0m"
+    exit 1
+fi
+
+exit 0
