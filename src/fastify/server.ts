@@ -1,7 +1,24 @@
+import 'reflect-metadata';
+import './config';
+import '../core/utils/services/index';
+import * as Sentry from '@sentry/node';
+import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { env } from 'process';
 import createApp from './app';
 import createContainer from '../core/utils/decorators/container';
 import { ILoggerService } from '../core/utils/services/logger-service/types';
+import { SENTRY_DSN } from '../core/utils/constants';
+
+Sentry.init({
+  dsn: SENTRY_DSN,
+  integrations: [
+    nodeProfilingIntegration()
+  ],
+  // Performance Monitoring
+  tracesSampleRate: 1.0, //  Capture 100% of the transactions
+  // Set sampling rate for profiling - this is relative to tracesSampleRate
+  profilesSampleRate: 1.0
+});
 
 export default async function startServer() {
   const container = createContainer();

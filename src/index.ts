@@ -1,6 +1,3 @@
-import 'reflect-metadata';
-import './fastify/config';
-import './core/utils/services/index';
 import startServer from './fastify/server';
 import createContainer from './core/utils/decorators/container';
 import { ILoggerService } from './core/utils/services/logger-service/types';

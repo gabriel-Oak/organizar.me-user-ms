@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="bc0bbacb-bab2-5fb4-b2af-ca603f70a77c")}catch(e){}}();
+
 Object.defineProperty(exports, "__esModule", { value: true });
 const symbols_1 = require("./symbols");
 const Post = (path) => {
@@ -15,3 +17,5 @@ const Post = (path) => {
     };
 };
 exports.default = Post;
+//# sourceMappingURL=post.js.map
+//# debugId=bc0bbacb-bab2-5fb4-b2af-ca603f70a77c

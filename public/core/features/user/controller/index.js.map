@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["core/features/user/controller/index.ts"],"sourceRoot":"/","sourcesContent":["import UserController from './controller';\n\nexport default UserController;\n"],"names":[],"mappings":";;;;;;;AAAA,8DAA0C;AAE1C,kBAAe,oBAAc,CAAC","debug_id":"3c5bb70d-2b0f-53bd-b3b5-bea0c128515a"}

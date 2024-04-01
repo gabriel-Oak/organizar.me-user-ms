@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4ab5b16f-07a8-5f4c-b540-f27582bf16af")}catch(e){}}();
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -18,3 +20,5 @@ class HttpError extends base_error_1.default {
     }
 }
 exports.default = HttpError;
+//# sourceMappingURL=http-error.js.map
+//# debugId=4ab5b16f-07a8-5f4c-b540-f27582bf16af

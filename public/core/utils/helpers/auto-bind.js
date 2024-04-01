@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="d98f8ec0-852d-5c29-8b14-325ff37fdc96")}catch(e){}}();
+
 Object.defineProperty(exports, "__esModule", { value: true });
 // Gets all non-builtin properties up the prototype chain.
 const getAllProperties = (object) => {
@@ -33,3 +35,5 @@ function autoBind(self, { include, exclude } = {}) {
     return self;
 }
 exports.default = autoBind;
+//# sourceMappingURL=auto-bind.js.map
+//# debugId=d98f8ec0-852d-5c29-8b14-325ff37fdc96

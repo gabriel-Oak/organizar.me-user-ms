@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="3a4da550-9c14-5e96-82c6-55ab5f149e42")}catch(e){}}();
+
 // import './internal-user-datasource';
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -16,3 +18,5 @@ const createInternalUserDatasource = () => {
     return instance;
 };
 exports.default = createInternalUserDatasource;
+//# sourceMappingURL=index.js.map
+//# debugId=3a4da550-9c14-5e96-82c6-55ab5f149e42

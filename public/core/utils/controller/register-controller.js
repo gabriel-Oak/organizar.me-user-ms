@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1e900a44-cb28-5704-9fa6-88607bb4eebe")}catch(e){}}();
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -54,3 +56,5 @@ function registerController(path, controller, app) {
     processMeta(symbols_1.SYMBOL_DELETE, 'delete');
 }
 exports.default = registerController;
+//# sourceMappingURL=register-controller.js.map
+//# debugId=1e900a44-cb28-5704-9fa6-88607bb4eebe

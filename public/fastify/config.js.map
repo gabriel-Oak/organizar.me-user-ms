@@ -1,0 +1,1 @@
+{"version":3,"file":"config.js","sources":["fastify/config.ts"],"sourceRoot":"/","sourcesContent":["import { config } from 'dotenv';\n\nconfig({ path: '.env' });\n"],"names":[],"mappings":";;;;AAAA,mCAAgC;AAEhC,IAAA,eAAM,EAAC,EAAE,IAAI,EAAE,MAAM,EAAE,CAAC,CAAC","debug_id":"a69eba41-c70a-539b-91f9-7a2ca7ed00d8"}

@@ -10,12 +10,12 @@ commit_message=$(cat "$1")
 
 # Check the message, if we match, all good baby.
 if [[ "$commit_message" =~ $convetional_commit_regex ]]; then
-   echo -e "\e[32mA mensagem do commit está seguindo os padrões convencionais 🤓\e[0m"
+   echo -e "\e[32m🤓 A mensagem do commit está seguindo os padrões convencionais 🤓\e[0m"
    exit 0
 fi
 
 # Uh-oh, this is not a conventional commit, show an example and link to the spec.
-echo -e "\e[31mA mensagem do commit não está seguindo os padrões convencionais 😐\e[0m"
+echo -e "\e[31m😐 A mensagem do commit não está seguindo os padrões convencionais 😐\e[0m"
 echo "Um exemplo de uma mensagem válida: "
 echo "  feat(login): add the 'remember me' button"
 echo "Mais detalhes em: https://www.conventionalcommits.org/en/v1.0.0/#summary"

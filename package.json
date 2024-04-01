@@ -8,10 +8,11 @@
     "tdd": "npm test -- --watch",
     "coverage": "npm test -- --coverage --passWithNoTests",
     "dev": "npx nodemon",
-    "build": "rimraf ./public && node ./node_modules/typescript/lib/tsc.js --project tsconfig.build.json",
+    "build": "rimraf ./public && node ./node_modules/typescript/lib/tsc.js --project tsconfig.build.json && npm run sentry:sourcemaps",
     "start": "npm run build && node public/index.js",
     "lint": "eslint -c .eslintrc.json ./src/**/*.ts --fix",
-    "prepare": "npx husky install"
+    "prepare": "npx husky install",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org smn-official --project organizarme-user-ms ./public && sentry-cli sourcemaps upload --org smn-official --project organizarme-user-ms ./public"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,9 @@
   "dependencies": {
     "@fastify/cors": "^8.2.0",
     "@fastify/middie": "^8.3.0",
+    "@sentry/cli": "^2.31.0",
+    "@sentry/node": "^7.109.0",
+    "@sentry/profiling-node": "^7.109.0",
     "@types/node": "^18.11.18",
     "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",

@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="5925b933-2a8a-55d9-b738-e0a81f0de7e2")}catch(e){}}();
+
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m, k);
@@ -42,12 +44,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const winston_1 = __importStar(require("winston"));
 const injectable_1 = __importDefault(require("../../decorators/injectable"));
 const inversify_1 = require("inversify");
+const Sentry = __importStar(require("@sentry/node"));
 let LoggerService = class LoggerService {
     constructor(logger) {
         this.logger = logger;
-        this.format = winston_1.default.format.printf(({ level, message }) => `${new Date().toLocaleString('pt-BR')} [${level.toUpperCase()}]: ${message.message ||
-            message.error ||
-            message}`);
+        this.format = winston_1.default.format.printf(({ level, message }) => {
+            const payload = `${new Date().toLocaleString('pt-BR')} [${level.toUpperCase()}]: ${message.message ||
+                message.error ||
+                message}`;
+            if (level === 'error')
+                Sentry.captureException(payload);
+            else
+                Sentry.captureMessage(payload);
+            return payload;
+        });
         if (process.env.NODE_ENV !== 'production') {
             logger.add(new winston_1.default.transports.Console({
                 format: this.format
@@ -85,3 +95,5 @@ LoggerService = __decorate([
     __metadata("design:paramtypes", [winston_1.Logger])
 ], LoggerService);
 exports.default = LoggerService;
+//# sourceMappingURL=logger-service.js.map
+//# debugId=5925b933-2a8a-55d9-b738-e0a81f0de7e2

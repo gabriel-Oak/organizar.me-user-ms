@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="632ee306-e543-5021-aad1-0fa02a29a754")}catch(e){}}();
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -27,3 +29,5 @@ class ApiAuthMiddleware {
     }
 }
 exports.default = ApiAuthMiddleware;
+//# sourceMappingURL=api-auth-middleware.js.map
+//# debugId=632ee306-e543-5021-aad1-0fa02a29a754

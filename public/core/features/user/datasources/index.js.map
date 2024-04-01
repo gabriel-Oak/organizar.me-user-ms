@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["core/features/user/datasources/index.ts"],"sourceRoot":"/","sourcesContent":["import './internal-datasource';\n"],"names":[],"mappings":";;;;AAAA,iCAA+B","debug_id":"0d7572fb-e363-51a3-80b7-99f96afe8430"}

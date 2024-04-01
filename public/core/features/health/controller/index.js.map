@@ -1,0 +1,1 @@
+{"version":3,"file":"index.js","sources":["core/features/health/controller/index.ts"],"sourceRoot":"/","sourcesContent":["import HealthController from './health-controller';\n\nexport default HealthController\n"],"names":[],"mappings":";;;;;;;AAAA,4EAAmD;AAEnD,kBAAe,2BAAgB,CAAA","debug_id":"ef3372b2-0343-5b35-b33f-ce08528cddba"}

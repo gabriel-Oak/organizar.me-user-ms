@@ -6,3 +6,5 @@ export const REDIS_PASS = process.env.REDIS_PASS;
 
 export const JWT_SECRET = process.env.JWT_SECRET!;
 export const API_TOKEN = process.env.API_TOKEN!;
+
+export const SENTRY_DSN = process.env.SENTRY_DSN!;

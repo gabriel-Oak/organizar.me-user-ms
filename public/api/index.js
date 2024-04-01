@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="7d36efc8-7c2c-5614-989b-4b22d6111bb9")}catch(e){}}();
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -13,3 +15,5 @@ async function handler(req, reply) {
     app.server.emit('request', req, reply);
 }
 exports.default = handler;
+//# sourceMappingURL=index.js.map
+//# debugId=7d36efc8-7c2c-5614-989b-4b22d6111bb9

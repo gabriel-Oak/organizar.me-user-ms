@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="dceb52bf-867d-5b1b-98ec-805e53b65905")}catch(e){}}();
+
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -36,3 +38,5 @@ container.bind('Repository<UserModel>')
 container.bind('DataSource').toDynamicValue(() => DatabaseService);
 container.bind('initDB').toDynamicValue(() => exports.initDB);
 exports.default = DatabaseService;
+//# sourceMappingURL=index.js.map
+//# debugId=dceb52bf-867d-5b1b-98ec-805e53b65905

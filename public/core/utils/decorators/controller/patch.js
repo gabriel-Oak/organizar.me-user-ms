@@ -1,4 +1,6 @@
 "use strict";
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="58a3ea78-3b15-539e-9da2-50b104d4f04a")}catch(e){}}();
+
 Object.defineProperty(exports, "__esModule", { value: true });
 const symbols_1 = require("./symbols");
 const Patch = (path) => {
@@ -15,3 +17,5 @@ const Patch = (path) => {
     };
 };
 exports.default = Patch;
+//# sourceMappingURL=patch.js.map
+//# debugId=58a3ea78-3b15-539e-9da2-50b104d4f04a
