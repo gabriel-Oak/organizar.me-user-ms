@@ -1,6 +1,6 @@
 import { ILoggerService } from '../../../../utils/services/logger-service/types';
 import { Left, Right } from '../../../../utils/types';
-import { Repository } from 'typeorm';
+import { Repository, ObjectId } from 'typeorm';
 import UserModel from '../../models/user-model';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import Injectable from '../../../../utils/decorators/injectable';
@@ -29,11 +29,11 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
 
   async findById(userId: string) {
     try {
-      const user = await this.userRepository.findOneBy({ id: userId });
+      const user = await this.userRepository.findOneBy({ id: userId as unknown as ObjectId });
       return new Right(user);
     } catch (e) {
       const error = new InternalUserDatasourceError(
-        (e as any).message || `Oops, sorry got an error searching for id${userId}`,
+        (e as any).message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId}`,
         { ...(e as any), userId }
       );
       this.logger.error(error.message, error);
@@ -48,7 +48,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
       return new Right(result);
     } catch (e) {
       const error = new InternalUserDatasourceError(
-        (e as any).message || `Oops, sorry got an error saving user${user.name}`,
+        (e as any).message || `Opa, foi mal tivemos um problema ao salvar o usuário ${user.name}`,
         { ...(e as any), user }
       );
       this.logger.error(error.message, error);
@@ -62,7 +62,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
       return new Right(null);
     } catch (e) {
       const error = new InternalUserDatasourceError(
-        (e as any).message || `Oops, sorry got an error saving user${user.name}`,
+        (e as any).message || `Opa, foi mal tivemos um problema para atualizar o usuário ${user.name}`,
         { ...(e as any), user }
       );
       this.logger.error(error.message, error);
@@ -72,14 +72,14 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
 
   async remove(userId: string) {
     try {
-      const user = await this.userRepository.findOneBy({ id: userId });
-      if (!user) throw new Error(`Oops, user ${userId} not found, might be already deleted`);
+      const user = await this.userRepository.findOneBy({ id: userId as unknown as ObjectId });
+      if (!user) throw new Error(`Oops, usuário ${userId} não encontrado, pode já ter sido deletado`);
 
       const result = await this.userRepository.remove(user);
       return new Right(result);
     } catch (e) {
       const error = new InternalUserDatasourceError(
-        (e as any).message || `Oops, sorry got an error searching for id${userId}`,
+        (e as any).message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId}`,
         { ...(e as any), userId }
       );
       this.logger.error(error.message, error);

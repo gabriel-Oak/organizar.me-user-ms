@@ -6,14 +6,14 @@ import UserModel from '../../models/user-model';
 export class DecodeUserInvalidTokenError extends BaseError {
   public readonly type = 'decode-user-invalid-token';
   constructor() {
-    super('Sorry token format is not valid, try to sing in again');
+    super('Desculpe, formato do token inválido, tente de novo');
   }
 }
 
 export class DecodeUserNotFoundError extends BaseError {
   public readonly type = 'decode-user-not-found';
   constructor() {
-    super('UserModel not found, try to sing in again');
+    super('Usuário não encontrado, tente entrar de novo');
   }
 }
 

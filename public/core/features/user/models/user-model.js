@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6ddcbbd5-c722-57a6-85b1-eca2ca2fe20e")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="0da105f0-c150-5112-920c-eb1d7189ff99")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -45,8 +45,8 @@ let UserModel = class UserModel {
     }
 };
 __decorate([
-    (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
-    __metadata("design:type", String)
+    (0, typeorm_1.ObjectIdColumn)(),
+    __metadata("design:type", typeorm_1.ObjectId)
 ], UserModel.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
@@ -78,9 +78,9 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserModel.prototype, "hashPassword", null);
 UserModel = __decorate([
-    (0, typeorm_1.Entity)(),
+    (0, typeorm_1.Entity)('user'),
     __metadata("design:paramtypes", [Object])
 ], UserModel);
 exports.default = UserModel;
 //# sourceMappingURL=user-model.js.map
-//# debugId=6ddcbbd5-c722-57a6-85b1-eca2ca2fe20e
+//# debugId=0da105f0-c150-5112-920c-eb1d7189ff99

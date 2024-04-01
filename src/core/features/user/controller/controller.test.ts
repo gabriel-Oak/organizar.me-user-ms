@@ -79,7 +79,7 @@ describe('UserController Tests', () => {
 
     expect(replyMock.code).toHaveBeenCalledWith(409);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
-      message: 'UserModel already exist, try a different email or usernal',
+      message: 'Um usuário com esse email já existe, tente um email diferente',
       statusCode: 409
     }));
   });
@@ -107,7 +107,7 @@ describe('UserController Tests', () => {
     expect(replyMock.code).toHaveBeenCalledWith(404)
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       statusCode: 404,
-      message: 'Sorry couldn\'t find any user for this email =/'
+      message: 'Desculpe não conseguimos encontrar um usuário com esse email =/'
     }));
   });
 
@@ -119,7 +119,7 @@ describe('UserController Tests', () => {
     expect(replyMock.code).toHaveBeenCalledWith(400)
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       statusCode: 400,
-      message: 'Oh looks like you didn\'t specify an email or a password'
+      message: 'Oh não parece que você não informou um email ou uma senha'
     }));
   });
 
@@ -131,7 +131,7 @@ describe('UserController Tests', () => {
     expect(replyMock.code).toHaveBeenCalledWith(403)
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       statusCode: 403,
-      message: 'Wrong password, please try again'
+      message: 'Senha errada, tente de novo por favor'
     }));
   });
 
@@ -205,7 +205,7 @@ describe('UserController Tests', () => {
     expect(replyMock.code).toHaveBeenCalledWith(400);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       statusCode: 400,
-      message: 'Invalid passwords informed, check if its spelled right and try again'
+      message: 'As senhas não batem, verifique se as digitou corretamente'
     }));
   });
 
@@ -221,7 +221,7 @@ describe('UserController Tests', () => {
     expect(replyMock.code).toHaveBeenCalledWith(400);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       statusCode: 400,
-      message: 'Invalid old password, check if its spelled right and try again'
+      message: 'A nova senha não pode ser igual a anterior'
     }));
   });
 
@@ -248,7 +248,7 @@ describe('UserController Tests', () => {
 
     expect(replyMock.code).toHaveBeenCalledWith(403);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
-      message: 'Password didn\'t match, please check its spelling',
+      message: 'A senha está incorreta, tente de novo',
       statusCode: 403
     }));
   });

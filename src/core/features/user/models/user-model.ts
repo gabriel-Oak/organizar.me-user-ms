@@ -1,18 +1,18 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, ObjectIdColumn, ObjectId } from 'typeorm';
 import { compare, hash } from 'bcryptjs';
 import { JWT_SECRET } from '../../../utils/constants';
 
 export interface UserProps {
-  id?: string;
+  id?: ObjectId;
   name: string;
   email: string;
   password?: string;
 }
 
-@Entity()
+@Entity('user')
 export default class UserModel implements UserProps {
-  @PrimaryGeneratedColumn('uuid')
-  public id?: string;
+  @ObjectIdColumn()
+  public id?: ObjectId;
 
   @Column({
     type: 'text',

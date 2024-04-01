@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="ba122a4e-01f0-569b-a37b-61a8694fe073")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="453eed53-9380-5143-8ca8-546f3315b301")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -27,7 +27,8 @@ let ValidateUserUsecase = class ValidateUserUsecase {
             return new types_1.Right(null);
         }
         catch (e) {
-            const message = (e.errors).reduce((prev, current, index) => `${prev}${!index ? ' ' : ', '}${(current).path.join(', ')}`, 'Sorry you need to specify a valid');
+            let message = (e.errors).reduce((prev, current, index) => `${prev}${!index ? ' ' : ', '}${(current).path.join(', ')}`, 'Desculpe, você precisa informar um');
+            message += ' válido';
             return new types_1.Left(new types_2.ValidateUserError(message + '.', e));
         }
     }
@@ -37,4 +38,4 @@ ValidateUserUsecase = __decorate([
 ], ValidateUserUsecase);
 exports.default = ValidateUserUsecase;
 //# sourceMappingURL=validate-user.js.map
-//# debugId=ba122a4e-01f0-569b-a37b-61a8694fe073
+//# debugId=453eed53-9380-5143-8ca8-546f3315b301

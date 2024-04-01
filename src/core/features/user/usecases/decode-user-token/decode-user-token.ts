@@ -17,7 +17,7 @@ export default class DecodeUserTokenUsecase implements IDecodeUserTokenUsecase {
   async execute(token: string) {
     try {
       const decodedUser = jwt.verify(token, JWT_SECRET) as UserProps;
-      const userResult = await this.userDatasource.findById(decodedUser.id!);
+      const userResult = await this.userDatasource.findById(decodedUser.id as unknown as string);
       if (userResult.isError || userResult.success) {
         return userResult as unknown as Either<decodeUserTokenErrors, UserModel>;
       }

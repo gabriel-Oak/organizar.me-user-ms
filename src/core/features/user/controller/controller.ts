@@ -102,7 +102,7 @@ export default class UserController {
     const { body } = req as { body: ChangePasswordBody };
     const result = await this.changePassword.execute({
       ...body,
-      userId: user.id!
+      userId: user.id as unknown as string
     });
     if (!result.isError) return await reply.send({ message: result.success });
 

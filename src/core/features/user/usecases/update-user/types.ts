@@ -7,7 +7,7 @@ export class UpdateUserInvalidPassError extends BaseError {
   public readonly type = 'update-user-invalid-pass';
 
   constructor() {
-    super('Password didn\'t match, please check its spelling');
+    super('A senha está incorreta, tente de novo');
   }
 }
 

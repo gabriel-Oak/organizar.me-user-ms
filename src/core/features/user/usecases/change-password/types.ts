@@ -6,13 +6,13 @@ export class ChangePasswordInvalidPassError extends BaseError {
   public readonly type = 'change-password-invalid-pass';
 
   constructor(message?: string) {
-    super(message ?? 'Invalid passwords informed, check if its spelled right and try again');
+    super(message ?? 'As senhas não batem, verifique se as digitou corretamente');
   }
 }
 
 export class ChangePasswordInvalidOldPassError extends ChangePasswordInvalidPassError {
   constructor() {
-    super('Invalid old password, check if its spelled right and try again');
+    super('A nova senha não pode ser igual a anterior');
   }
 }
 

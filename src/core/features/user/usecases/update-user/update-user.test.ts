@@ -4,11 +4,12 @@ import { IInternalUserDatasource, InternalUserDatasourceError } from '../../data
 import UserModel from '../../models/user-model';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from './types';
 import UpdateUserUsecase from './update-user';
+import { ObjectId } from 'typeorm';
 
 describe('UpdateUserUsecase Tests', () => {
   const userMock = mock<UserModel>();
   const payloadMock = {
-    id: 'string',
+    id: mock<ObjectId>(),
     name: 'string',
     email: 'string',
     password: 'string'

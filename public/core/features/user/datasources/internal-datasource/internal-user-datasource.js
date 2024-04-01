@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1ab13874-0d0c-5aa0-bd94-c5d3bcc7dd6a")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="b67b4a26-0c8c-5328-a5b3-aafeef29c740")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -44,7 +44,7 @@ let InternalUserDatasource = class InternalUserDatasource {
             return new types_1.Right(user);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, sorry got an error searching for id${userId}`, { ...e, userId });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId}`, { ...e, userId });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -56,7 +56,7 @@ let InternalUserDatasource = class InternalUserDatasource {
             return new types_1.Right(result);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, sorry got an error saving user${user.name}`, { ...e, user });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${user.name}`, { ...e, user });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -67,7 +67,7 @@ let InternalUserDatasource = class InternalUserDatasource {
             return new types_1.Right(null);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, sorry got an error saving user${user.name}`, { ...e, user });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema para atualizar o usuário ${user.name}`, { ...e, user });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -76,12 +76,12 @@ let InternalUserDatasource = class InternalUserDatasource {
         try {
             const user = await this.userRepository.findOneBy({ id: userId });
             if (!user)
-                throw new Error(`Oops, user ${userId} not found, might be already deleted`);
+                throw new Error(`Oops, usuário ${userId} não encontrado, pode já ter sido deletado`);
             const result = await this.userRepository.remove(user);
             return new types_1.Right(result);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, sorry got an error searching for id${userId}`, { ...e, userId });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId}`, { ...e, userId });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -95,4 +95,4 @@ InternalUserDatasource = __decorate([
 ], InternalUserDatasource);
 exports.default = InternalUserDatasource;
 //# sourceMappingURL=internal-user-datasource.js.map
-//# debugId=1ab13874-0d0c-5aa0-bd94-c5d3bcc7dd6a
+//# debugId=b67b4a26-0c8c-5328-a5b3-aafeef29c740

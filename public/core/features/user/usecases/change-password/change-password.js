@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="990a6ab5-57a4-5c57-9a9b-1ed8da9b6034")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="d4e7233b-ac18-5f1e-b177-f2040d9873c8")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -42,7 +42,7 @@ let ChangePasswordUsecase = class ChangePasswordUsecase {
         const insertResult = await this.userDatasource.update(user);
         if (insertResult.isError)
             return insertResult;
-        return new types_1.Right('UserModel password has been successfully updated');
+        return new types_1.Right('Senha atualizada com sucesso!');
     }
 };
 ChangePasswordUsecase = __decorate([
@@ -52,4 +52,4 @@ ChangePasswordUsecase = __decorate([
 ], ChangePasswordUsecase);
 exports.default = ChangePasswordUsecase;
 //# sourceMappingURL=change-password.js.map
-//# debugId=990a6ab5-57a4-5c57-9a9b-1ed8da9b6034
+//# debugId=d4e7233b-ac18-5f1e-b177-f2040d9873c8

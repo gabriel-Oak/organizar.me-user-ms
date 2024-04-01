@@ -9,7 +9,7 @@ describe('ChangePasswordUsecase Tests', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
   const userMock = mock<UserModel>();
   const payloadMock = {
-    userId: userMock.id!,
+    userId: userMock.id as unknown as string,
     oldPassword: 'dsuihfi',
     newPassword: 'dsiufuis'
   }

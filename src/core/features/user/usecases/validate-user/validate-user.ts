@@ -16,11 +16,11 @@ export default class ValidateUserUsecase implements IValidateUserUsecase {
       userSchema.parse(user);
       return new Right(null);
     } catch (e) {
-      const message = ((e as ZodError).errors).reduce(
+      let message = ((e as ZodError).errors).reduce(
         (prev: string, current: ZodIssue, index: any) => `${prev}${!index ? ' ' : ', '}${(current).path.join(', ')}`,
-        'Sorry you need to specify a valid'
+        'Desculpe, você precisa informar um'
       );
-
+      message += ' válido';
       return new Left(new ValidateUserError(message + '.', e));
     }
   }

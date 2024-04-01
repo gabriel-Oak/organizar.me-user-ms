@@ -10,17 +10,17 @@ export interface LoginPayload {
 
 export class AuthenticateInvalidError extends BaseError {
   public readonly type = 'authenticate-invalid';
-  constructor() { super('Oh looks like you didn\'t specify an email or a password'); }
+  constructor() { super('Oh não parece que você não informou um email ou uma senha'); }
 }
 
 export class AuthenticateUserNotFoundError extends BaseError {
   public readonly type = 'authenticate-user-not-found';
-  constructor() { super('Sorry couldn\'t find any user for this email =/'); }
+  constructor() { super('Desculpe não conseguimos encontrar um usuário com esse email =/'); }
 }
 
 export class AuthenticateUserWrongPasswordError extends BaseError {
   public readonly type = 'authenticate-user-wrong-password';
-  constructor() { super('Wrong password, please try again'); }
+  constructor() { super('Senha errada, tente de novo por favor'); }
 }
 
 export type authenticateUserErrors = InternalUserDatasourceError
