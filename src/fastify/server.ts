@@ -3,7 +3,7 @@ import createApp from './app';
 import createContainer from '../core/utils/decorators/container';
 import { ILoggerService } from '../core/utils/services/logger-service/types';
 
-export default async function startServerF() {
+export default async function startServer() {
   const container = createContainer();
   const logger = container.get<ILoggerService>('ILoggerService');
   const port = env.PORT ?? 8080;
