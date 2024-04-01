@@ -1,7 +1,7 @@
 import { SYMBOL_DELETE } from './symbols';
-import { IControllerActionMeta } from '../types';
+import { IControllerActionMeta } from './types';
 
-const del = (path: string) => {
+const Del = (path: string) => {
   return (
     target: any,
     propertyKey: string
@@ -19,4 +19,4 @@ const del = (path: string) => {
   };
 }
 
-export default del;
+export default Del;

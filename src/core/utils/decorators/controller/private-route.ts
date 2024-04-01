@@ -1,6 +1,6 @@
 import { SYMBOL_PRIVATE } from './symbols';
 
-const privateRoute = () => {
+const PrivateRoute = () => {
   return (
     target: any,
     propertyKey: string
@@ -15,4 +15,4 @@ const privateRoute = () => {
   };
 }
 
-export default privateRoute;
+export default PrivateRoute;

@@ -19,8 +19,7 @@ describe('UserController Tests', () => {
   const body: UserProps = {
     email: 'hellomyboy@gmail.com',
     name: 'Jhon Doe',
-    password: '123ohmygod',
-    username: 'jhon123'
+    password: '123ohmygod'
   };
 
   const requestMock = mock<FastifyRequest>({ query: { i: 'vodka' }, body } as any);

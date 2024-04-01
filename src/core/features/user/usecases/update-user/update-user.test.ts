@@ -11,7 +11,6 @@ describe('UpdateUserUsecase Tests', () => {
     id: 'string',
     name: 'string',
     email: 'string',
-    username: 'string',
     password: 'string'
   }
   const datasourceMock = mock<IInternalUserDatasource>();

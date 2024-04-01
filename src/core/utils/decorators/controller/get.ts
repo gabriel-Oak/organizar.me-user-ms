@@ -1,7 +1,7 @@
 import { SYMBOL_GET } from './symbols';
-import { IControllerActionMeta } from '../types';
+import { IControllerActionMeta } from './types';
 
-const get = (path: string) => {
+const Get = (path: string) => {
   return (
     target: any,
     propertyKey: string
@@ -19,4 +19,4 @@ const get = (path: string) => {
   };
 }
 
-export default get;
+export default Get;

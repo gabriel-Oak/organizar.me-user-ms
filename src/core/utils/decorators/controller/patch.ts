@@ -1,7 +1,7 @@
 import { SYMBOL_PATCH } from './symbols';
-import { IControllerActionMeta } from '../types';
+import { IControllerActionMeta } from './types';
 
-const patch = (path: string) => {
+const Patch = (path: string) => {
   return (
     target: object,
     propertyKey: string
@@ -19,4 +19,4 @@ const patch = (path: string) => {
   };
 }
 
-export default patch;
+export default Patch;

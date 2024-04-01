@@ -4,9 +4,15 @@ import UserModel, { UserProps } from '../../models/user-model';
 import { DecodeUserInvalidTokenError, DecodeUserNotFoundError, decodeUserTokenErrors, IDecodeUserTokenUsecase } from './types';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
+import Injectable from '../../../../utils/decorators/injectable';
+import { inject } from 'inversify';
 
+@Injectable('IDecodeUserTokenUsecase')
 export default class DecodeUserTokenUsecase implements IDecodeUserTokenUsecase {
-  constructor(private readonly userDatasource: IInternalUserDatasource) {}
+  constructor(
+    @inject('IInternalUserDatasource')
+    private readonly userDatasource: IInternalUserDatasource
+  ) {}
 
   async execute(token: string) {
     try {

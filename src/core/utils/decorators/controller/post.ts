@@ -1,7 +1,7 @@
 import { SYMBOL_POST } from './symbols';
-import { IControllerActionMeta } from '../types';
+import { IControllerActionMeta } from './types';
 
-const post = (path: string) => {
+const Post = (path: string) => {
   return (
     target: object,
     propertyKey: string
@@ -19,4 +19,4 @@ const post = (path: string) => {
   };
 }
 
-export default post;
+export default Post;

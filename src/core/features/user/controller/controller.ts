@@ -1,6 +1,5 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
-import controller from '../../../utils/controller/decorators/controller';
-import post from '../../../utils/controller/decorators/post';
+import Controller from '../../../utils/decorators/controller/controller';
 import HttpError from '../../../utils/errors/http-error';
 import UserModel, { UserProps } from '../models/user-model';
 import { IAuthenticateUserUsecase, LoginPayload } from '../usecases/authenticate-user/types';
@@ -8,26 +7,35 @@ import { IDecodeUserTokenUsecase } from '../usecases/decode-user-token/types';
 import { IInsertUserUsecase } from '../usecases/insert-user/types';
 import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
 import { IValidateUserUsecase } from '../usecases/validate-user/types';
-import get from '../../../utils/controller/decorators/get';
-import patch from '../../../utils/controller/decorators/patch';
-import privateRoute from '../../../utils/controller/decorators/private-route';
+import privateRoute from '../../../utils/decorators/controller/private-route';
 import { ChangePasswordBody, IChangePasswordUsecase } from '../usecases/change-password/types';
 import { IUpdateUserUsecase, updateUserProps } from '../usecases/update-user/types';
-import put from '../../../utils/controller/decorators/put';
+import Post from '../../../utils/decorators/controller/post';
+import Get from '../../../utils/decorators/controller/get';
+import Patch from '../../../utils/decorators/controller/patch';
+import Put from '../../../utils/decorators/controller/put';
+import { inject } from 'inversify';
 
-@controller('/user')
+@Controller('/user')
 export default class UserController {
   constructor(
+    @inject('IValidateUserUsecase')
     private readonly validateUser: IValidateUserUsecase,
+    @inject('IInsertUserUsecase')
     private readonly insertUser: IInsertUserUsecase,
+    @inject('ISignUserTokenUsecase')
     private readonly signUserToken: ISignUserTokenUsecase,
+    @inject('IAuthenticateUserUsecase')
     private readonly authenticateUser: IAuthenticateUserUsecase,
+    @inject('IDecodeUserTokenUsecase')
     private readonly decodeUserToken: IDecodeUserTokenUsecase,
+    @inject('IChangePasswordUsecase')
     private readonly changePassword: IChangePasswordUsecase,
+    @inject('IUpdateUserUsecase')
     private readonly updateUser: IUpdateUserUsecase
   ) { }
 
-  @post('/new')
+  @Post('/new')
   async new(req: FastifyRequest, reply: FastifyReply) {
     const payload = req.body as Omit<UserProps, 'id'>;
     const validate = this.validateUser.execute(payload);
@@ -51,7 +59,7 @@ export default class UserController {
     return await reply.send({ auth, user });
   }
 
-  @post('/authenticate')
+  @Post('/authenticate')
   async authenticate(req: FastifyRequest, reply: FastifyReply) {
     const payload = req.body as LoginPayload;
     const authResult = await this.authenticateUser.execute(payload);
@@ -72,7 +80,7 @@ export default class UserController {
     return await reply.send({ user, auth });
   }
 
-  @get('/decode')
+  @Get('/decode')
   async decode(req: FastifyRequest, reply: FastifyReply) {
     const { auth } = req.headers;
     const result = await this.decodeUserToken.execute(String(auth));
@@ -88,7 +96,7 @@ export default class UserController {
     return await reply.code(error.statusCode).send(error);
   }
 
-  @patch('/change-password')
+  @Patch('/change-password')
   @privateRoute()
   async changeUserPassword(req: FastifyRequest, reply: FastifyReply, user: UserModel) {
     const { body } = req as { body: ChangePasswordBody };
@@ -105,7 +113,7 @@ export default class UserController {
     return await reply.code(error.statusCode).send(error);
   }
 
-  @put('/update-user')
+  @Put('/update-user')
   @privateRoute()
   async update(req: FastifyRequest, reply: FastifyReply, user: UserModel) {
     const { body } = req as { body: updateUserProps };

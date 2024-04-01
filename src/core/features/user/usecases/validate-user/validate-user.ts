@@ -2,13 +2,14 @@ import { z, ZodError, ZodIssue } from 'zod';
 import { Left, Right } from '../../../../utils/types';
 import { UserProps } from '../../models/user-model';
 import { IValidateUserUsecase, ValidateUserError } from './types';
+import Injectable from '../../../../utils/decorators/injectable';
 
+@Injectable('IValidateUserUsecase')
 export default class ValidateUserUsecase implements IValidateUserUsecase {
   execute(user: UserProps) {
     try {
       const userSchema = z.object({
         name: z.string().min(3).max(250),
-        username: z.string().min(3).max(250).regex(/([a-zA-Z\d])\w+/),
         email: z.string().email(),
         password: z.string().min(6).max(20)
       });

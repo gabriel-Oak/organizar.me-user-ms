@@ -1,9 +1,13 @@
+import { inject } from 'inversify';
+import Injectable from '../../../../utils/decorators/injectable';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
 import { AuthenticateInvalidError, AuthenticateUserNotFoundError, AuthenticateUserWrongPasswordError, IAuthenticateUserUsecase, LoginPayload } from './types';
 
+@Injectable('IAuthenticateUserUsecase')
 export default class AuthenticateUserUsecase implements IAuthenticateUserUsecase {
   constructor(
+    @inject('IInternalUserDatasource')
     private readonly userUsecase: IInternalUserDatasource
   ) { }
 

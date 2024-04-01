@@ -5,8 +5,8 @@ import { decodeUserTokenErrors } from '../../features/user/usecases/decode-user-
 import HttpError from '../errors/http-error';
 import createLoggerService from '../services/logger-service';
 import { Either } from '../types';
-import { SYMBOL_DELETE, SYMBOL_GET, SYMBOL_PATCH, SYMBOL_POST, SYMBOL_PRIVATE, SYMBOL_PUT } from './decorators/symbols';
-import { controllerAction, IControllerActionMeta } from './types';
+import { SYMBOL_DELETE, SYMBOL_GET, SYMBOL_PATCH, SYMBOL_POST, SYMBOL_PRIVATE, SYMBOL_PUT } from '../decorators/controller/symbols';
+import { controllerAction, IControllerActionMeta } from '../decorators/controller/types';
 
 export default function registerController(
   path: string,

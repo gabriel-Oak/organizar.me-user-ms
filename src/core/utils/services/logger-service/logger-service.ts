@@ -1,10 +1,13 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import winston, { Logger } from 'winston';
 import { ILoggerService } from './types';
+import Injectable from '../../decorators/injectable';
+import { inject } from 'inversify';
 
+@Injectable('ILoggerService')
 export default class LoggerService implements ILoggerService {
   constructor(
-    private readonly logger: Logger
+    @inject('Logger') private readonly logger: Logger
   ) {
     if (process.env.NODE_ENV !== 'production') {
       logger.add(new winston.transports.Console({

@@ -3,9 +3,15 @@ import { ISignUserTokenUsecase } from './types';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
 import { ICacheService } from '../../../../utils/services/cache-service/types';
+import Injectable from '../../../../utils/decorators/injectable';
+import { inject } from 'inversify';
 
+@Injectable('ISignUserTokenUsecase')
 export default class SignUserTokenUsecase implements ISignUserTokenUsecase {
-  constructor(private readonly chage: ICacheService) { }
+  constructor(
+    @inject('ICacheService')
+    private readonly chage: ICacheService
+  ) { }
 
   execute(user: UserModel) {
     const newUser = new UserModel({ ...user, password: undefined });

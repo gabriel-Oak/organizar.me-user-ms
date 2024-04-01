@@ -3,11 +3,14 @@ import { Left, Right } from '../../../../utils/types';
 import { Repository } from 'typeorm';
 import UserModel from '../../models/user-model';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
+import Injectable from '../../../../utils/decorators/injectable';
+import { inject } from 'inversify';
 
+@Injectable('IInternalUserDatasource')
 export default class InternalUserDatasource implements IInternalUserDatasource {
   constructor(
-    private readonly userRepository: Repository<UserModel>,
-    private readonly logger: ILoggerService
+    @inject('Repository<UserModel>') private readonly userRepository: Repository<UserModel>,
+    @inject('ILoggerService') private readonly logger: ILoggerService
   ) { }
 
   async findByEmail(email: string) {
@@ -18,23 +21,6 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
       const error = new InternalUserDatasourceError(
         (e as any).message || `Oops, sorry got an error searching for ${email}`,
         { ...(e as any), email }
-      );
-      this.logger.error(error.message, error);
-      return new Left(error);
-    }
-  }
-
-  async findByEmailOrUsername(query: { username: string; email: string; }) {
-    try {
-      const user = await this.userRepository.findOneBy([
-        { email: query.email },
-        { username: query.username }
-      ]);
-      return new Right(user);
-    } catch (e) {
-      const error = new InternalUserDatasourceError(
-        (e as any).message || `Oops, sorry got an error searching for ${query.email} ${query.username}`,
-        { ...(e as any), query }
       );
       this.logger.error(error.message, error);
       return new Left(error);

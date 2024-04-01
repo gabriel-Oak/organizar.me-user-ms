@@ -1,3 +1,4 @@
+// import './insert-user';
 import createInternalUserDatasource from '../../datasources/internal-datasource';
 import InsertUserUsecase from './insert-user';
 import { IInsertUserUsecase } from './types';

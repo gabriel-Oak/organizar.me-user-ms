@@ -37,28 +37,6 @@ describe('InternalUserDatasource Tests', () => {
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
   });
 
-  it('Should find user by email or username', async () => {
-    repositoryMock.findOneBy.mockImplementation(async () => userMock);
-    const result = await datasource.findByEmailOrUsername({
-      email: 'hireme@gmail.com',
-      username: 'toninhodogas'
-    });
-
-    expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
-  });
-
-  it('Should handle error finding by email or username', async () => {
-    repositoryMock.findOneBy.mockRejectedValue(Error('HOLLY CHEAT'));
-    const result = await datasource.findByEmailOrUsername({
-      email: 'hireme@gmail.com',
-      username: 'toninhodogas'
-    });
-
-    expect(result).toBeInstanceOf(Left);
-    expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
-  });
-
   it('Should find user by id', async () => {
     repositoryMock.findOneBy.mockImplementation(async () => userMock);
     const result = await datasource.findById('hiremexteamplsohmygod@gmaiu.com');

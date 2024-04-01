@@ -8,9 +8,6 @@ export class InternalUserDatasourceError extends BaseError {
 
 export interface IInternalUserDatasource {
   findByEmail: (email: string) => Promise<Either<InternalUserDatasourceError, UserModel | null>>;
-  findByEmailOrUsername: (query: {
-    email: string; username: string;
-  }) => Promise<Either<InternalUserDatasourceError, UserModel | null>>;
   findById: (userId: string) => Promise<Either<InternalUserDatasourceError, UserModel | null>>;
   save: (user: UserModel) => Promise<Either<InternalUserDatasourceError, UserModel>>;
   remove: (userId: string) => Promise<Either<InternalUserDatasourceError, UserModel>>;

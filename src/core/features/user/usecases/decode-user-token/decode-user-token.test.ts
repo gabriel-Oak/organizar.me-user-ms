@@ -10,7 +10,7 @@ import { JWT_SECRET } from '../../../../utils/constants';
 describe('DecodeUserTokenUsecase Test', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
   const usecase: IDecodeUserTokenUsecase = new DecodeUserTokenDatasource(userDatasourceMock);
-  const token = sign({ email: '', id: '', name: '', username: '' }, JWT_SECRET);
+  const token = sign({ email: '', id: '', name: '' }, JWT_SECRET);
 
   beforeEach(() => {
     mockReset(userDatasourceMock);

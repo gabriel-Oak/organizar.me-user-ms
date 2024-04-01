@@ -1,7 +1,7 @@
 import { SYMBOL_PUT } from './symbols';
-import { IControllerActionMeta } from '../types';
+import { IControllerActionMeta } from './types';
 
-const put = (path: string) => {
+const Put = (path: string) => {
   return (
     target: object,
     propertyKey: string
@@ -19,4 +19,4 @@ const put = (path: string) => {
   };
 }
 
-export default put;
+export default Put;
