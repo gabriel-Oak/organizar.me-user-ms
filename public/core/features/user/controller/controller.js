@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="d5f82c39-2d5b-54e3-a960-ea00102f0b48")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6086a919-c695-5703-a270-40ef7de9db43")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -24,10 +24,10 @@ const private_route_1 = __importDefault(require("../../../utils/decorators/contr
 const post_1 = __importDefault(require("../../../utils/decorators/controller/post"));
 const get_1 = __importDefault(require("../../../utils/decorators/controller/get"));
 const patch_1 = __importDefault(require("../../../utils/decorators/controller/patch"));
-const put_1 = __importDefault(require("../../../utils/decorators/controller/put"));
 const inversify_1 = require("inversify");
+const del_1 = __importDefault(require("../../../utils/decorators/controller/del"));
 let UserController = class UserController {
-    constructor(validateUser, insertUser, signUserToken, authenticateUser, decodeUserToken, changePassword, updateUser) {
+    constructor(validateUser, insertUser, signUserToken, authenticateUser, decodeUserToken, changePassword, updateUser, removeUser) {
         this.validateUser = validateUser;
         this.insertUser = insertUser;
         this.signUserToken = signUserToken;
@@ -35,6 +35,7 @@ let UserController = class UserController {
         this.decodeUserToken = decodeUserToken;
         this.changePassword = changePassword;
         this.updateUser = updateUser;
+        this.removeUser = removeUser;
     }
     async new(req, reply) {
         const payload = req.body;
@@ -75,25 +76,14 @@ let UserController = class UserController {
         const auth = this.signUserToken.execute(user);
         return await reply.send({ user, auth });
     }
-    async decode(req, reply) {
-        const { auth } = req.headers;
-        const result = await this.decodeUserToken.execute(String(auth));
-        if (!result.isError)
-            return await reply.send(result.success.getProps());
-        const error = new http_error_1.default({
-            ...result.error,
-            statusCode: {
-                'decode-user-invalid-token': 400,
-                'decode-user-not-found': 404
-            }[String(result.error.type)] ?? 500
-        });
-        return await reply.code(error.statusCode).send(error);
+    async decode(req, reply, user) {
+        return await reply.send(user.getProps());
     }
     async changeUserPassword(req, reply, user) {
         const { body } = req;
         const result = await this.changePassword.execute({
             ...body,
-            userId: user.id
+            userId: user._id
         });
         if (!result.isError)
             return await reply.send({ message: result.success });
@@ -113,6 +103,13 @@ let UserController = class UserController {
             error.statusCode = 403;
         return await reply.code(error.statusCode).send(error);
     }
+    async remove(_, reply, user) {
+        const result = await this.removeUser.execute(user);
+        if (!result.isError)
+            return await reply.send();
+        const error = new http_error_1.default(result.error);
+        return await reply.code(error.statusCode).send(error);
+    }
 };
 __decorate([
     (0, post_1.default)('/new'),
@@ -128,8 +125,9 @@ __decorate([
 ], UserController.prototype, "authenticate", null);
 __decorate([
     (0, get_1.default)('/decode'),
+    (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "decode", null);
 __decorate([
@@ -140,12 +138,19 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "changeUserPassword", null);
 __decorate([
-    (0, put_1.default)('/update-user'),
+    (0, patch_1.default)('/update-user'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "update", null);
+__decorate([
+    (0, del_1.default)('/remove'),
+    (0, private_route_1.default)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "remove", null);
 UserController = __decorate([
     (0, controller_1.default)('/user'),
     __param(0, (0, inversify_1.inject)('IValidateUserUsecase')),
@@ -155,8 +160,9 @@ UserController = __decorate([
     __param(4, (0, inversify_1.inject)('IDecodeUserTokenUsecase')),
     __param(5, (0, inversify_1.inject)('IChangePasswordUsecase')),
     __param(6, (0, inversify_1.inject)('IUpdateUserUsecase')),
-    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object])
+    __param(7, (0, inversify_1.inject)('IRemoveUserUsecase')),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object])
 ], UserController);
 exports.default = UserController;
 //# sourceMappingURL=controller.js.map
-//# debugId=d5f82c39-2d5b-54e3-a960-ea00102f0b48
+//# debugId=6086a919-c695-5703-a270-40ef7de9db43

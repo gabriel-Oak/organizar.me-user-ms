@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="ea1e9324-e276-535b-bf79-6af924d6fe60")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="fc1484d4-0601-5fea-93f6-ffd8fcbb3674")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -23,6 +23,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = require("../../../../utils/constants");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
 const inversify_1 = require("inversify");
+const mongodb_1 = require("mongodb");
 let DecodeUserTokenUsecase = class DecodeUserTokenUsecase {
     constructor(userDatasource) {
         this.userDatasource = userDatasource;
@@ -30,7 +31,7 @@ let DecodeUserTokenUsecase = class DecodeUserTokenUsecase {
     async execute(token) {
         try {
             const decodedUser = jsonwebtoken_1.default.verify(token, constants_1.JWT_SECRET);
-            const userResult = await this.userDatasource.findById(decodedUser.id);
+            const userResult = await this.userDatasource.findById(new mongodb_1.ObjectId(decodedUser._id));
             if (userResult.isError || userResult.success) {
                 return userResult;
             }
@@ -48,4 +49,4 @@ DecodeUserTokenUsecase = __decorate([
 ], DecodeUserTokenUsecase);
 exports.default = DecodeUserTokenUsecase;
 //# sourceMappingURL=decode-user-token.js.map
-//# debugId=ea1e9324-e276-535b-bf79-6af924d6fe60
+//# debugId=fc1484d4-0601-5fea-93f6-ffd8fcbb3674

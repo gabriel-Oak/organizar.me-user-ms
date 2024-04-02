@@ -12,7 +12,7 @@ const createRouter = (app: FastifyInstance) => {
   ]);
 
   app.get('/*', (req, res) => res.code(404).send(new HttpError({
-    message: 'Error, looks like the route you are looking for has been removed or doesn\'t exists',
+    message: 'Erro, parece que a rota pela qual você está procurando não existe ou foi movida',
     statusCode: 404,
     meta: req.url
   })));

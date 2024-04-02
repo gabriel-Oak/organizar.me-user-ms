@@ -5,3 +5,4 @@ import './insert-user';
 import './sign-user-token';
 import './update-user';
 import './validate-user';
+import './remove-user';

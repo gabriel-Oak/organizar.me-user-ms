@@ -15,7 +15,7 @@ export default class SignUserTokenUsecase implements ISignUserTokenUsecase {
 
   execute(user: UserModel) {
     const newUser = new UserModel({ ...user, password: undefined });
-    void this.chage.set(`user:${user.id!}`, newUser);
+    void this.chage.set(`user:${user._id!.toString()!}`, newUser.getProps());
 
     return jwt.sign(newUser.getProps(), JWT_SECRET, { expiresIn: '24h' });
   }

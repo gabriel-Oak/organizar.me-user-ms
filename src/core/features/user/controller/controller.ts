@@ -13,31 +13,42 @@ import { IUpdateUserUsecase, updateUserProps } from '../usecases/update-user/typ
 import Post from '../../../utils/decorators/controller/post';
 import Get from '../../../utils/decorators/controller/get';
 import Patch from '../../../utils/decorators/controller/patch';
-import Put from '../../../utils/decorators/controller/put';
 import { inject } from 'inversify';
+import { IRemoveUserUsecase } from '../usecases/remove-user/types';
+import Del from '../../../utils/decorators/controller/del';
 
 @Controller('/user')
 export default class UserController {
   constructor(
     @inject('IValidateUserUsecase')
     private readonly validateUser: IValidateUserUsecase,
+
     @inject('IInsertUserUsecase')
     private readonly insertUser: IInsertUserUsecase,
+
     @inject('ISignUserTokenUsecase')
     private readonly signUserToken: ISignUserTokenUsecase,
+
     @inject('IAuthenticateUserUsecase')
     private readonly authenticateUser: IAuthenticateUserUsecase,
+
     @inject('IDecodeUserTokenUsecase')
     private readonly decodeUserToken: IDecodeUserTokenUsecase,
+
     @inject('IChangePasswordUsecase')
     private readonly changePassword: IChangePasswordUsecase,
+
     @inject('IUpdateUserUsecase')
-    private readonly updateUser: IUpdateUserUsecase
+    private readonly updateUser: IUpdateUserUsecase,
+
+    @inject('IRemoveUserUsecase')
+    private readonly removeUser: IRemoveUserUsecase
+
   ) { }
 
   @Post('/new')
   async new(req: FastifyRequest, reply: FastifyReply) {
-    const payload = req.body as Omit<UserProps, 'id'>;
+    const payload = req.body as Omit<UserProps, '_id'>;
     const validate = this.validateUser.execute(payload);
     if (validate.isError) {
       const error = new HttpError({
@@ -81,19 +92,9 @@ export default class UserController {
   }
 
   @Get('/decode')
-  async decode(req: FastifyRequest, reply: FastifyReply) {
-    const { auth } = req.headers;
-    const result = await this.decodeUserToken.execute(String(auth));
-    if (!result.isError) return await reply.send(result.success.getProps());
-
-    const error = new HttpError({
-      ...result.error,
-      statusCode: {
-        'decode-user-invalid-token': 400,
-        'decode-user-not-found': 404
-      }[String(result.error.type)] ?? 500
-    });
-    return await reply.code(error.statusCode).send(error);
+  @privateRoute()
+  async decode(req: FastifyRequest, reply: FastifyReply, user: UserModel) {
+    return await reply.send(user.getProps());
   }
 
   @Patch('/change-password')
@@ -102,7 +103,7 @@ export default class UserController {
     const { body } = req as { body: ChangePasswordBody };
     const result = await this.changePassword.execute({
       ...body,
-      userId: user.id as unknown as string
+      userId: user._id as unknown as string
     });
     if (!result.isError) return await reply.send({ message: result.success });
 
@@ -113,7 +114,7 @@ export default class UserController {
     return await reply.code(error.statusCode).send(error);
   }
 
-  @Put('/update-user')
+  @Patch('/update-user')
   @privateRoute()
   async update(req: FastifyRequest, reply: FastifyReply, user: UserModel) {
     const { body } = req as { body: updateUserProps };
@@ -122,6 +123,16 @@ export default class UserController {
 
     const error = new HttpError(result.error);
     if (result.error.type === 'update-user-invalid-pass') error.statusCode = 403;
+    return await reply.code(error.statusCode).send(error);
+  }
+
+  @Del('/remove')
+  @privateRoute()
+  async remove(_: FastifyRequest, reply: FastifyReply, user: UserModel) {
+    const result = await this.removeUser.execute(user);
+    if (!result.isError) return await reply.send();
+
+    const error = new HttpError(result.error);
     return await reply.code(error.statusCode).send(error);
   }
 }

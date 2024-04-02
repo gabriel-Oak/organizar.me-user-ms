@@ -1,14 +1,14 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1e900a44-cb28-5704-9fa6-88607bb4eebe")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="41374a7c-f8b7-5abd-aa7a-52a4d1372cef")}catch(e){}}();
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const decode_user_token_1 = __importDefault(require("../../features/user/usecases/decode-user-token"));
 const http_error_1 = __importDefault(require("../errors/http-error"));
 const logger_service_1 = __importDefault(require("../services/logger-service"));
 const symbols_1 = require("../decorators/controller/symbols");
+const container_1 = __importDefault(require("../decorators/container"));
 function registerController(path, controller, app) {
     function processMeta(symbol, method) {
         if (Reflect.hasMetadata(symbol, controller.constructor)) {
@@ -20,12 +20,12 @@ function registerController(path, controller, app) {
                     try {
                         let user;
                         if (privateRoutes?.includes(action)) {
-                            const decoder = (0, decode_user_token_1.default)();
+                            const decoder = (0, container_1.default)().get('IDecodeUserTokenUsecase');
                             const { auth } = req.headers;
                             const decodeResult = await decoder.execute(String(auth));
                             if (decodeResult.isError) {
                                 const error = new http_error_1.default({
-                                    message: 'Sorry, you need to specify a valid "auth" header token.',
+                                    message: 'Desculpe, você precisa estar autenticado para acessar esse recurso.',
                                     meta: decodeResult.error,
                                     statusCode: 403
                                 });
@@ -57,4 +57,4 @@ function registerController(path, controller, app) {
 }
 exports.default = registerController;
 //# sourceMappingURL=register-controller.js.map
-//# debugId=1e900a44-cb28-5704-9fa6-88607bb4eebe
+//# debugId=41374a7c-f8b7-5abd-aa7a-52a4d1372cef

@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="0da105f0-c150-5112-920c-eb1d7189ff99")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="3b2f2134-d496-55a4-97b5-0b3a218fb934")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -32,7 +32,7 @@ let UserModel = class UserModel {
     }
     getProps() {
         return {
-            id: this.id,
+            _id: this._id?.toString(),
             name: this.name,
             email: this.email
         };
@@ -47,7 +47,7 @@ let UserModel = class UserModel {
 __decorate([
     (0, typeorm_1.ObjectIdColumn)(),
     __metadata("design:type", typeorm_1.ObjectId)
-], UserModel.prototype, "id", void 0);
+], UserModel.prototype, "_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
@@ -83,4 +83,4 @@ UserModel = __decorate([
 ], UserModel);
 exports.default = UserModel;
 //# sourceMappingURL=user-model.js.map
-//# debugId=0da105f0-c150-5112-920c-eb1d7189ff99
+//# debugId=3b2f2134-d496-55a4-97b5-0b3a218fb934

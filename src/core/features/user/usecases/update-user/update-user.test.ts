@@ -9,7 +9,7 @@ import { ObjectId } from 'typeorm';
 describe('UpdateUserUsecase Tests', () => {
   const userMock = mock<UserModel>();
   const payloadMock = {
-    id: mock<ObjectId>(),
+    _id: mock<ObjectId>(),
     name: 'string',
     email: 'string',
     password: 'string'

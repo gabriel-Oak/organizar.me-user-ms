@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import { FastifyReply, FastifyRequest } from 'fastify';
 import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from '../usecases/insert-user/types';
@@ -10,10 +11,11 @@ import HttpError from '../../../utils/errors/http-error';
 import {
   AuthenticateInvalidError, AuthenticateUserNotFoundError, AuthenticateUserWrongPasswordError, IAuthenticateUserUsecase
 } from '../usecases/authenticate-user/types';
-import { DecodeUserInvalidTokenError, DecodeUserNotFoundError, IDecodeUserTokenUsecase } from '../usecases/decode-user-token/types';
+import { IDecodeUserTokenUsecase } from '../usecases/decode-user-token/types';
 import { InternalUserDatasourceError } from '../datasources/internal-datasource/types';
 import { ChangePasswordInvalidOldPassError, ChangePasswordInvalidPassError, IChangePasswordUsecase } from '../usecases/change-password/types';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from '../usecases/update-user/types';
+import { IRemoveUserUsecase } from '../usecases/remove-user/types';
 
 describe('UserController Tests', () => {
   const body: UserProps = {
@@ -31,6 +33,7 @@ describe('UserController Tests', () => {
   const decodeUserTokenMock = mock<IDecodeUserTokenUsecase>();
   const changePasswordMock = mock<IChangePasswordUsecase>();
   const updateUserMock = mock<IUpdateUserUsecase>();
+  const removeUserMock = mock<IRemoveUserUsecase>();
 
   const userMock = new UserModel({ ...body, password: undefined });
   const auth = 'iaehdiosahd8aksjhdjahsd8hjsakh.ajsihdkasdkashdkhaskdjhaksd.jkasdjkhaskdhaksdhkasjdha';
@@ -42,7 +45,8 @@ describe('UserController Tests', () => {
     authenticateUserMock,
     decodeUserTokenMock,
     changePasswordMock,
-    updateUserMock
+    updateUserMock,
+    removeUserMock
   );
 
   beforeEach(() => {
@@ -55,6 +59,7 @@ describe('UserController Tests', () => {
     mockReset(decodeUserTokenMock);
     mockReset(changePasswordMock);
     mockReset(updateUserMock);
+    mockReset(removeUserMock);
     replyMock.code.mockImplementation(() => replyMock);
   });
 
@@ -150,35 +155,8 @@ describe('UserController Tests', () => {
 
   it('Should decode user', async () => {
     decodeUserTokenMock.execute.mockImplementation(async () => new Right(userMock));
-    await controller.decode({ ...requestMock, headers: { auth } }, replyMock);
+    await controller.decode({ ...requestMock, headers: { auth } }, replyMock, userMock);
     expect(replyMock.send).toHaveBeenCalledWith(userMock.getProps());
-  });
-
-  it('Should return invalid auth', async () => {
-    const error = new DecodeUserInvalidTokenError();
-    decodeUserTokenMock.execute
-      .mockImplementation(async () => new Left(error));
-    await controller.decode({ ...requestMock, headers: { auth } }, replyMock);
-    expect(replyMock.send).toHaveBeenCalledWith(new HttpError({ ...error, statusCode: 400 }));
-    expect(replyMock.code).toHaveBeenCalledWith(400);
-  });
-
-  it('Should return decode user not found', async () => {
-    const error = new DecodeUserNotFoundError();
-    decodeUserTokenMock.execute
-      .mockImplementation(async () => new Left(error));
-    await controller.decode({ ...requestMock, headers: { auth } }, replyMock);
-    expect(replyMock.send).toHaveBeenCalledWith(new HttpError({ ...error, statusCode: 404 }));
-    expect(replyMock.code).toHaveBeenCalledWith(404);
-  });
-
-  it('Should handle datasource error', async () => {
-    const error = new InternalUserDatasourceError('');
-    decodeUserTokenMock.execute
-      .mockImplementation(async () => new Left(error));
-    await controller.decode({ ...requestMock, headers: { auth } }, replyMock);
-    expect(replyMock.send).toHaveBeenCalledWith(new HttpError(error));
-    expect(replyMock.code).toHaveBeenCalledWith(500);
   });
 
   it('Should change user password', async () => {
@@ -221,7 +199,7 @@ describe('UserController Tests', () => {
     expect(replyMock.code).toHaveBeenCalledWith(400);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       statusCode: 400,
-      message: 'A nova senha não pode ser igual a anterior'
+      message: 'A senha informada está incorreta'
     }));
   });
 
@@ -266,5 +244,21 @@ describe('UserController Tests', () => {
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
       message: 'Oops'
     }));
+  });
+
+  it('Should return datasource error removing user', async () => {
+    const error = new InternalUserDatasourceError('ohno');
+    removeUserMock.execute.mockImplementation(async () => new Left(error));
+    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userMock);
+    expect(replyMock.send).toHaveBeenCalledWith(new HttpError(error));
+    expect(replyMock.code).toHaveBeenCalledWith(500);
+  });
+
+  it('Should return ok removing user', async () => {
+    removeUserMock.execute
+      .mockImplementation(async () => new Right(userMock));
+    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userMock);
+    expect(replyMock.send).toHaveBeenCalled();
+    expect(replyMock.code).not.toHaveBeenCalled();
   });
 });

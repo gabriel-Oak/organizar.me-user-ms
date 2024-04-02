@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="b67b4a26-0c8c-5328-a5b3-aafeef29c740")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="df23ed66-c5d5-5e5a-bbda-e3c4d1ce8790")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -22,6 +22,7 @@ const typeorm_1 = require("typeorm");
 const types_2 = require("./types");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
 const inversify_1 = require("inversify");
+const mongodb_1 = require("mongodb");
 let InternalUserDatasource = class InternalUserDatasource {
     constructor(userRepository, logger) {
         this.userRepository = userRepository;
@@ -40,11 +41,11 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async findById(userId) {
         try {
-            const user = await this.userRepository.findOneBy({ id: userId });
+            const user = await this.userRepository.findOneBy({ _id: userId });
             return new types_1.Right(user);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId}`, { ...e, userId });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId.toString()}`, { ...e, userId });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -63,7 +64,7 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async update(user) {
         try {
-            await this.userRepository.update(user.id, user);
+            await this.userRepository.update(user._id, user);
             return new types_1.Right(null);
         }
         catch (e) {
@@ -74,14 +75,14 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async remove(userId) {
         try {
-            const user = await this.userRepository.findOneBy({ id: userId });
+            const user = await this.userRepository.findOneBy({ _id: new mongodb_1.ObjectId(userId) });
             if (!user)
-                throw new Error(`Oops, usuário ${userId} não encontrado, pode já ter sido deletado`);
+                throw new Error(`Oops, usuário ${userId.toString()} não encontrado, pode já ter sido deletado`);
             const result = await this.userRepository.remove(user);
             return new types_1.Right(result);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId}`, { ...e, userId });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId.toString()}`, { ...e, userId });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -95,4 +96,4 @@ InternalUserDatasource = __decorate([
 ], InternalUserDatasource);
 exports.default = InternalUserDatasource;
 //# sourceMappingURL=internal-user-datasource.js.map
-//# debugId=b67b4a26-0c8c-5328-a5b3-aafeef29c740
+//# debugId=df23ed66-c5d5-5e5a-bbda-e3c4d1ce8790

@@ -18,7 +18,7 @@ describe('SignUserUsecase Tests', () => {
       email: 'olha@gmail.com',
       name: 'Hello World',
       password: 'oyuweyfyewf7yisdfiuhsdf',
-      id: mock<ObjectId>()
+      _id: mock<ObjectId>()
     }));
 
     expect(typeof token).toBe('string');

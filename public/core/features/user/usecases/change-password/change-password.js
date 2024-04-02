@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="d4e7233b-ac18-5f1e-b177-f2040d9873c8")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6f7af8b3-94ff-5881-9c32-f76f7bc12222")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -21,6 +21,7 @@ const inversify_1 = require("inversify");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
 const types_1 = require("../../../../utils/types");
 const types_2 = require("./types");
+const mongodb_1 = require("mongodb");
 let ChangePasswordUsecase = class ChangePasswordUsecase {
     constructor(userDatasource) {
         this.userDatasource = userDatasource;
@@ -29,7 +30,7 @@ let ChangePasswordUsecase = class ChangePasswordUsecase {
         if (!payload.newPassword || !payload.oldPassword) {
             return new types_1.Left(new types_2.ChangePasswordInvalidPassError());
         }
-        const userResult = await this.userDatasource.findById(payload.userId);
+        const userResult = await this.userDatasource.findById(new mongodb_1.ObjectId(payload.userId));
         if (userResult.isError)
             return userResult;
         if (!userResult.success)
@@ -39,6 +40,7 @@ let ChangePasswordUsecase = class ChangePasswordUsecase {
         if (!oldPassIsValid)
             return new types_1.Left(new types_2.ChangePasswordInvalidOldPassError());
         user.password = payload.newPassword;
+        await user.hashPassword();
         const insertResult = await this.userDatasource.update(user);
         if (insertResult.isError)
             return insertResult;
@@ -52,4 +54,4 @@ ChangePasswordUsecase = __decorate([
 ], ChangePasswordUsecase);
 exports.default = ChangePasswordUsecase;
 //# sourceMappingURL=change-password.js.map
-//# debugId=d4e7233b-ac18-5f1e-b177-f2040d9873c8
+//# debugId=6f7af8b3-94ff-5881-9c32-f76f7bc12222

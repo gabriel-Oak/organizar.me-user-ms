@@ -3,7 +3,7 @@ import { compare, hash } from 'bcryptjs';
 import { JWT_SECRET } from '../../../utils/constants';
 
 export interface UserProps {
-  id?: ObjectId;
+  _id?: ObjectId;
   name: string;
   email: string;
   password?: string;
@@ -12,7 +12,7 @@ export interface UserProps {
 @Entity('user')
 export default class UserModel implements UserProps {
   @ObjectIdColumn()
-  public id?: ObjectId;
+  public _id?: ObjectId;
 
   @Column({
     type: 'text',
@@ -55,13 +55,13 @@ export default class UserModel implements UserProps {
 
   getProps() {
     return {
-      id: this.id,
+      _id: this._id?.toString(),
       name: this.name,
       email: this.email
     }
   }
 
-  updateProps(props: Partial<Omit<UserProps, 'id'>>) {
+  updateProps(props: Partial<Omit<UserProps, '_id'>>) {
     Object.assign(this, {
       name: props.name ?? this.name,
       email: props.email ?? this.email

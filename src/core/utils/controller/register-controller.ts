@@ -1,12 +1,12 @@
 import { FastifyInstance } from 'fastify';
 import UserModel from '../../features/user/models/user-model';
-import createDecodeUserTokenUsecase from '../../features/user/usecases/decode-user-token';
-import { decodeUserTokenErrors } from '../../features/user/usecases/decode-user-token/types';
+import { IDecodeUserTokenUsecase, decodeUserTokenErrors } from '../../features/user/usecases/decode-user-token/types';
 import HttpError from '../errors/http-error';
 import createLoggerService from '../services/logger-service';
 import { Either } from '../types';
 import { SYMBOL_DELETE, SYMBOL_GET, SYMBOL_PATCH, SYMBOL_POST, SYMBOL_PRIVATE, SYMBOL_PUT } from '../decorators/controller/symbols';
 import { controllerAction, IControllerActionMeta } from '../decorators/controller/types';
+import createContainer from '../decorators/container';
 
 export default function registerController(
   path: string,
@@ -33,13 +33,13 @@ export default function registerController(
           try {
             let user: UserModel;
             if (privateRoutes?.includes(action)) {
-              const decoder = createDecodeUserTokenUsecase();
+              const decoder = createContainer().get<IDecodeUserTokenUsecase>('IDecodeUserTokenUsecase');
               const { auth } = req.headers;
               const decodeResult: Either<decodeUserTokenErrors, UserModel> = await decoder.execute(String(auth));
 
               if (decodeResult.isError) {
                 const error = new HttpError({
-                  message: 'Sorry, you need to specify a valid "auth" header token.',
+                  message: 'Desculpe, você precisa estar autenticado para acessar esse recurso.',
                   meta: decodeResult.error,
                   statusCode: 403
                 });

@@ -5,6 +5,7 @@ import { ILoggerService } from '../../../../utils/services/logger-service/types'
 import InternalUserDatasource from './internal-user-datasource';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import { Left, Right } from '../../../../utils/types';
+import { ObjectId } from 'mongodb';
 
 describe('InternalUserDatasource Tests', () => {
   const repositoryMock = mock<Repository<UserModel>>();
@@ -37,17 +38,17 @@ describe('InternalUserDatasource Tests', () => {
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
   });
 
-  it('Should find user by id', async () => {
+  it('Should find user by _id', async () => {
     repositoryMock.findOneBy.mockImplementation(async () => userMock);
-    const result = await datasource.findById('hiremexteamplsohmygod@gmaiu.com');
+    const result = await datasource.findById(new ObjectId('660b3b8193fa2af84dc04cd6'));
 
     expect(result).toBeInstanceOf(Right);
     expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
   });
 
-  it('Should handle error finding by id', async () => {
+  it('Should handle error finding by _id', async () => {
     repositoryMock.findOneBy.mockRejectedValue(Error('HOLLY CHEAT'));
-    const result = await datasource.findById('hiremexteamplsohmygod@gmaiu.com');
+    const result = await datasource.findById(new ObjectId('660b3b8193fa2af84dc04cd6'));
 
     expect(result).toBeInstanceOf(Left);
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
@@ -87,7 +88,7 @@ describe('InternalUserDatasource Tests', () => {
   it('Should remove user', async () => {
     repositoryMock.findOneBy.mockImplementation(async () => userMock);
     repositoryMock.remove.mockImplementation(async (u: UserModel) => u);
-    const result = await datasource.remove('hsiuhdiusadhiudas-iasdhaishdi-haisdhiuash');
+    const result = await datasource.remove(new ObjectId('660b3b8193fa2af84dc04cd6'));
 
     expect(result).toBeInstanceOf(Right);
     expect((result as Right<unknown>).success).toBeInstanceOf(UserModel);
@@ -95,7 +96,7 @@ describe('InternalUserDatasource Tests', () => {
 
   it('Should handle error removing user', async () => {
     repositoryMock.findOneBy.mockImplementation(async () => null);
-    const result = await datasource.remove('hsiuhdiusadhiudas-iasdhaishdi-haisdhiuash');
+    const result = await datasource.remove(new ObjectId('660b3b8193fa2af84dc04cd6'));
 
     expect(result).toBeInstanceOf(Left);
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);

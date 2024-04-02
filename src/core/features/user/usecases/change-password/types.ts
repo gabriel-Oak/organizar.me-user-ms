@@ -12,7 +12,7 @@ export class ChangePasswordInvalidPassError extends BaseError {
 
 export class ChangePasswordInvalidOldPassError extends ChangePasswordInvalidPassError {
   constructor() {
-    super('A nova senha não pode ser igual a anterior');
+    super('A senha informada está incorreta');
   }
 }
 

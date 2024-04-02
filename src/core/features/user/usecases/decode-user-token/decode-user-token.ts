@@ -6,18 +6,20 @@ import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
 import Injectable from '../../../../utils/decorators/injectable';
 import { inject } from 'inversify';
+import { ObjectId } from 'mongodb';
 
 @Injectable('IDecodeUserTokenUsecase')
 export default class DecodeUserTokenUsecase implements IDecodeUserTokenUsecase {
   constructor(
     @inject('IInternalUserDatasource')
     private readonly userDatasource: IInternalUserDatasource
-  ) {}
+  ) { }
 
   async execute(token: string) {
     try {
-      const decodedUser = jwt.verify(token, JWT_SECRET) as UserProps;
-      const userResult = await this.userDatasource.findById(decodedUser.id as unknown as string);
+      const decodedUser = jwt.verify(token, JWT_SECRET) as Omit<UserProps, '_id'> & { _id: string };
+      const userResult = await this.userDatasource.findById(new ObjectId(decodedUser._id));
+
       if (userResult.isError || userResult.success) {
         return userResult as unknown as Either<decodeUserTokenErrors, UserModel>;
       }

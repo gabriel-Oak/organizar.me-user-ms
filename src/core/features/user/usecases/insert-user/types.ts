@@ -15,5 +15,5 @@ export type insertUserErrors = InternalUserDatasourceError
 | InsertUserAlreadyExist;
 
 export interface IInsertUserUsecase {
-  execute: (user: Omit<UserProps, 'id'>) => Promise<Either<insertUserErrors, UserModel>>;
+  execute: (user: Omit<UserProps, '_id'>) => Promise<Either<insertUserErrors, UserModel>>;
 }

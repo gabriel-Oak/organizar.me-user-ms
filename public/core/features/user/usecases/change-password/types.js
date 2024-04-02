@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="c24bbc98-c409-5a4b-93c5-7cac99fcd8f6")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="d19907ce-2fb4-5f8b-bfa7-9ead7566c653")}catch(e){}}();
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -16,9 +16,9 @@ class ChangePasswordInvalidPassError extends base_error_1.default {
 exports.ChangePasswordInvalidPassError = ChangePasswordInvalidPassError;
 class ChangePasswordInvalidOldPassError extends ChangePasswordInvalidPassError {
     constructor() {
-        super('A nova senha não pode ser igual a anterior');
+        super('A senha informada está incorreta');
     }
 }
 exports.ChangePasswordInvalidOldPassError = ChangePasswordInvalidOldPassError;
 //# sourceMappingURL=types.js.map
-//# debugId=c24bbc98-c409-5a4b-93c5-7cac99fcd8f6
+//# debugId=d19907ce-2fb4-5f8b-bfa7-9ead7566c653

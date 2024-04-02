@@ -1,16 +1,21 @@
+import 'reflect-metadata';
 import { mock, mockReset } from 'jest-mock-extended';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
 import { DecodeUserInvalidTokenError, DecodeUserNotFoundError, IDecodeUserTokenUsecase } from './types';
 import DecodeUserTokenDatasource from './decode-user-token';
 import { Left, Right } from '../../../../utils/types';
 import UserModel from '../../models/user-model';
-import { sign } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
 
 describe('DecodeUserTokenUsecase Test', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
   const usecase: IDecodeUserTokenUsecase = new DecodeUserTokenDatasource(userDatasourceMock);
-  const token = sign({ email: '', id: '', name: '' }, JWT_SECRET);
+  const token = jwt.sign({
+    email: 'ooo',
+    _id: '660b3b8193fa2af84dc04cd6',
+    name: 'ooo'
+  }, JWT_SECRET);
 
   beforeEach(() => {
     mockReset(userDatasourceMock);

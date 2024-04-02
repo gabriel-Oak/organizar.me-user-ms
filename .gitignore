@@ -3,6 +3,10 @@ dist/
 coverage/
 .env
 .vercel
+.vscode
+
+# Sentry Config File
+.sentryclirc
 
 # Sentry Config File
 .sentryclirc
