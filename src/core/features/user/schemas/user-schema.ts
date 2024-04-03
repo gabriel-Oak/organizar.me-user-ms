@@ -2,17 +2,17 @@ import { BeforeInsert, BeforeUpdate, Column, Entity, ObjectIdColumn, ObjectId } 
 import { compare, hash } from 'bcryptjs';
 import { JWT_SECRET } from '../../../utils/constants';
 
-export interface UserProps {
-  _id?: ObjectId;
+export interface UserSchemaProps {
+  id?: ObjectId;
   name: string;
   email: string;
   password?: string;
 }
 
 @Entity('user')
-export default class UserSchema implements UserProps {
+export default class UserSchema implements UserSchemaProps {
   @ObjectIdColumn()
-  public _id?: ObjectId;
+  public id?: ObjectId;
 
   @Column({
     type: 'text',
@@ -33,7 +33,7 @@ export default class UserSchema implements UserProps {
   })
   public password?: string;
 
-  constructor(props?: UserProps) {
+  constructor(props?: UserSchemaProps) {
     Object.assign(this, props);
   }
 
@@ -55,13 +55,13 @@ export default class UserSchema implements UserProps {
 
   getProps() {
     return {
-      _id: this._id?.toString(),
+      id: this.id?.toString(),
       name: this.name,
       email: this.email
     }
   }
 
-  updateProps(props: Partial<Omit<UserProps, '_id'>>) {
+  updateProps(props: Partial<Omit<UserSchemaProps, 'id'>>) {
     Object.assign(this, {
       name: props.name ?? this.name,
       email: props.email ?? this.email

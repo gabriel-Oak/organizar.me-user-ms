@@ -1,7 +1,7 @@
 import BaseError from '../../../../utils/errors/base-error';
 import { Either } from '../../../../utils/types';
 import { InternalUserDatasourceError } from '../../datasources/internal-datasource/types'
-import UserSchema, { UserProps } from '../../schemas/user-schema';
+import UserSchema, { UserSchemaProps } from '../../schemas/user-schema';
 
 export class InsertUserAlreadyExist extends BaseError {
   public readonly type = 'insert-user-already-exist';
@@ -15,5 +15,5 @@ export type insertUserErrors = InternalUserDatasourceError
 | InsertUserAlreadyExist;
 
 export interface IInsertUserUsecase {
-  execute: (user: Omit<UserProps, '_id'>) => Promise<Either<insertUserErrors, UserSchema>>;
+  execute: (user: Omit<UserSchemaProps, 'id'>) => Promise<Either<insertUserErrors, UserSchema>>;
 }

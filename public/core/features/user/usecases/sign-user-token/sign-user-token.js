@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="7a276f3d-f518-5f50-ad16-ae39c98cd554")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e6cc04c9-415b-5f2c-8538-01fa0ba07ba3")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -28,7 +28,7 @@ let SignUserTokenUsecase = class SignUserTokenUsecase {
     }
     execute(user) {
         const newUser = new user_schema_1.default({ ...user, password: undefined });
-        void this.chage.set(`user:${user._id.toString()}`, newUser.getProps());
+        void this.chage.set(`user:${user.id.toString()}`, newUser.getProps());
         return jsonwebtoken_1.default.sign(newUser.getProps(), constants_1.JWT_SECRET, { expiresIn: '24h' });
     }
 };
@@ -39,4 +39,4 @@ SignUserTokenUsecase = __decorate([
 ], SignUserTokenUsecase);
 exports.default = SignUserTokenUsecase;
 //# sourceMappingURL=sign-user-token.js.map
-//# debugId=7a276f3d-f518-5f50-ad16-ae39c98cd554
+//# debugId=e6cc04c9-415b-5f2c-8538-01fa0ba07ba3

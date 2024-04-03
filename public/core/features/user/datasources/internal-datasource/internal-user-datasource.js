@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="003104e0-1ef9-5453-9dcb-acc84683e67b")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="0f00c9b6-c74c-53c8-8aab-cc1974c973b3")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -23,10 +23,22 @@ const types_2 = require("./types");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
 const inversify_1 = require("inversify");
 const mongodb_1 = require("mongodb");
+const user_1 = __importDefault(require("../../entities/user"));
 let InternalUserDatasource = class InternalUserDatasource {
     constructor(userRepository, logger) {
         this.userRepository = userRepository;
         this.logger = logger;
+    }
+    async findManyByIds(userIds) {
+        try {
+            const users = await this.userRepository.findBy({ id: (0, typeorm_1.In)(userIds) });
+            return new types_1.Right(users.map((user) => new user_1.default(user.getProps())));
+        }
+        catch (e) {
+            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, desculpe, tivemos um problema buscando por (${userIds.join(', ')})`, { ...e, userIds });
+            this.logger.error(error.message, error);
+            return new types_1.Left(error);
+        }
     }
     async findByEmail(email) {
         try {
@@ -34,14 +46,14 @@ let InternalUserDatasource = class InternalUserDatasource {
             return new types_1.Right(user);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, sorry got an error searching for ${email}`, { ...e, email });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Oops, desculpe, tivemos um problema buscando por ${email}`, { ...e, email });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
     }
     async findById(userId) {
         try {
-            const user = await this.userRepository.findOneBy({ _id: userId });
+            const user = await this.userRepository.findOneBy({ id: userId });
             return new types_1.Right(user);
         }
         catch (e) {
@@ -64,7 +76,7 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async update(user) {
         try {
-            await this.userRepository.update(user._id, user);
+            await this.userRepository.update(user.id, user);
             return new types_1.Right(null);
         }
         catch (e) {
@@ -75,7 +87,7 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async remove(userId) {
         try {
-            const user = await this.userRepository.findOneBy({ _id: new mongodb_1.ObjectId(userId) });
+            const user = await this.userRepository.findOneBy({ id: new mongodb_1.ObjectId(userId) });
             if (!user)
                 throw new Error(`Oops, usuário ${userId.toString()} não encontrado, pode já ter sido deletado`);
             const result = await this.userRepository.remove(user);
@@ -96,4 +108,4 @@ InternalUserDatasource = __decorate([
 ], InternalUserDatasource);
 exports.default = InternalUserDatasource;
 //# sourceMappingURL=internal-user-datasource.js.map
-//# debugId=003104e0-1ef9-5453-9dcb-acc84683e67b
+//# debugId=0f00c9b6-c74c-53c8-8aab-cc1974c973b3

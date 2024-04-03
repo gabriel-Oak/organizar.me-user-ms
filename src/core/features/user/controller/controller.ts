@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import Controller from '../../../utils/decorators/controller/controller';
 import HttpError from '../../../utils/errors/http-error';
-import UserSchema, { UserProps } from '../schemas/user-schema';
+import UserSchema, { UserSchemaProps } from '../schemas/user-schema';
 import { IAuthenticateUserUsecase, LoginPayload } from '../usecases/authenticate-user/types';
 import { IDecodeUserTokenUsecase } from '../usecases/decode-user-token/types';
 import { IInsertUserUsecase } from '../usecases/insert-user/types';
@@ -9,7 +9,7 @@ import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
 import { IValidateUserUsecase } from '../usecases/validate-user/types';
 import privateRoute from '../../../utils/decorators/controller/private-route';
 import { ChangePasswordBody, IChangePasswordUsecase } from '../usecases/change-password/types';
-import { IUpdateUserUsecase, updateUserProps } from '../usecases/update-user/types';
+import { IUpdateUserUsecase, updateUserSchemaProps } from '../usecases/update-user/types';
 import Post from '../../../utils/decorators/controller/post';
 import Get from '../../../utils/decorators/controller/get';
 import Patch from '../../../utils/decorators/controller/patch';
@@ -48,7 +48,7 @@ export default class UserController {
 
   @Post('/new')
   async new(req: FastifyRequest, reply: FastifyReply) {
-    const payload = req.body as Omit<UserProps, '_id'>;
+    const payload = req.body as Omit<UserSchemaProps, 'id'>;
     const validate = this.validateUser.execute(payload);
     if (validate.isError) {
       const error = new HttpError({
@@ -103,7 +103,7 @@ export default class UserController {
     const { body } = req as { body: ChangePasswordBody };
     const result = await this.changePassword.execute({
       ...body,
-      userId: user._id as unknown as string
+      userId: user.id as unknown as string
     });
     if (!result.isError) return await reply.send({ message: result.success });
 
@@ -117,7 +117,7 @@ export default class UserController {
   @Patch('/update-user')
   @privateRoute()
   async update(req: FastifyRequest, reply: FastifyReply, user: UserSchema) {
-    const { body } = req as { body: updateUserProps };
+    const { body } = req as { body: updateUserSchemaProps };
     const result = await this.updateUser.execute(user, body);
     if (!result.isError) return await reply.send();
 

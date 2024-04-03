@@ -1,11 +1,11 @@
 import { Left, Right } from '../../../../utils/types';
-import { UserProps } from '../../schemas/user-schema';
+import { UserSchemaProps } from '../../schemas/user-schema';
 import { IValidateUserUsecase } from './types';
 import ValidateUserUsecase from './validate-user';
 
 describe('ValidadeUserUsecase tests', () => {
   const usecase: IValidateUserUsecase = new ValidateUserUsecase();
-  const payloadMock: UserProps = {
+  const payloadMock: UserSchemaProps = {
     email: 'hellomyboy@gmail.com',
     name: 'Jhon Doe',
     password: '123ohmygod'

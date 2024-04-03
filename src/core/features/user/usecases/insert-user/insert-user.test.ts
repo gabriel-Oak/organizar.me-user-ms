@@ -1,14 +1,14 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserSchema, { UserProps } from '../../schemas/user-schema';
+import UserSchema, { UserSchemaProps } from '../../schemas/user-schema';
 import InsertUserUsecase from './insert-user';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from './types';
 
 describe('InsertUserUsecase Tests', () => {
   const datasourceMock = mock<IInternalUserDatasource>();
   const usecase: IInsertUserUsecase = new InsertUserUsecase(datasourceMock);
-  const payloadMock: UserProps = {
+  const payloadMock: UserSchemaProps = {
     email: 'hellomyboy@gmail.com',
     name: 'Jhon Doe',
     password: '123ohmygod'

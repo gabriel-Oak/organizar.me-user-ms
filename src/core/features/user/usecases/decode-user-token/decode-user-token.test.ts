@@ -13,7 +13,7 @@ describe('DecodeUserTokenUsecase Test', () => {
   const usecase: IDecodeUserTokenUsecase = new DecodeUserTokenDatasource(userDatasourceMock);
   const token = jwt.sign({
     email: 'ooo',
-    _id: '660b3b8193fa2af84dc04cd6',
+    id: '660b3b8193fa2af84dc04cd6',
     name: 'ooo'
   }, JWT_SECRET);
 

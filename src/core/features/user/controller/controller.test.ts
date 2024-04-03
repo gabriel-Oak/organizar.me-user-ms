@@ -4,7 +4,7 @@ import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from '../usecases/insert-user/types';
 import { IValidateUserUsecase, ValidateUserError } from '../usecases/validate-user/types';
 import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
-import UserSchema, { UserProps } from '../schemas/user-schema';
+import UserSchema, { UserSchemaProps } from '../schemas/user-schema';
 import UserController from './controller';
 import { Left, Right } from '../../../utils/types';
 import HttpError from '../../../utils/errors/http-error';
@@ -18,7 +18,7 @@ import { IUpdateUserUsecase, UpdateUserInvalidPassError } from '../usecases/upda
 import { IRemoveUserUsecase } from '../usecases/remove-user/types';
 
 describe('UserController Tests', () => {
-  const body: UserProps = {
+  const body: UserSchemaProps = {
     email: 'hellomyboy@gmail.com',
     name: 'Jhon Doe',
     password: '123ohmygod'

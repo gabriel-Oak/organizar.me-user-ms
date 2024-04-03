@@ -7,9 +7,9 @@ import { ChangePasswordInvalidOldPassError, ChangePasswordInvalidPassError, ICha
 
 describe('ChangePasswordUsecase Tests', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
-  const userMock = mock<UserSchema>({ _id: '660b3b8193fa2af84dc04cd6' });
+  const userMock = mock<UserSchema>({ id: '660b3b8193fa2af84dc04cd6' });
   const payloadMock = {
-    userId: userMock._id as unknown as string,
+    userId: userMock.id as unknown as string,
     oldPassword: 'dsuihfi',
     newPassword: 'dsiufuis'
   }

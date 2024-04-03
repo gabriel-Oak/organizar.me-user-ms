@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e95abd7f-94b0-5c13-a998-9956e794bb1f")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1d5d15cf-217f-5c97-ac30-af5d8a02f849")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -31,7 +31,7 @@ let DecodeUserTokenUsecase = class DecodeUserTokenUsecase {
     async execute(token) {
         try {
             const decodedUser = jsonwebtoken_1.default.verify(token, constants_1.JWT_SECRET);
-            const userResult = await this.userDatasource.findById(new mongodb_1.ObjectId(decodedUser._id));
+            const userResult = await this.userDatasource.findById(new mongodb_1.ObjectId(decodedUser.id));
             if (userResult.isError || userResult.success) {
                 return userResult;
             }
@@ -49,4 +49,4 @@ DecodeUserTokenUsecase = __decorate([
 ], DecodeUserTokenUsecase);
 exports.default = DecodeUserTokenUsecase;
 //# sourceMappingURL=decode-user-token.js.map
-//# debugId=e95abd7f-94b0-5c13-a998-9956e794bb1f
+//# debugId=1d5d15cf-217f-5c97-ac30-af5d8a02f849

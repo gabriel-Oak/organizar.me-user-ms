@@ -12,7 +12,7 @@ export default class RemoveUserUsecase implements IRemoveUserUsecase {
   ) { }
 
   async execute(user: UserSchema) {
-    const result = await this.datasource.remove(user._id!);
+    const result = await this.datasource.remove(user.id!);
     return result;
   }
 }

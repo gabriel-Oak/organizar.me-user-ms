@@ -6,6 +6,7 @@ import InternalUserDatasource from './internal-user-datasource';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import { Left, Right } from '../../../../utils/types';
 import { ObjectId } from 'mongodb';
+import User from '../../entities/user';
 
 describe('InternalUserDatasource Tests', () => {
   const repositoryMock = mock<Repository<UserSchema>>();
@@ -20,6 +21,22 @@ describe('InternalUserDatasource Tests', () => {
   beforeEach(() => {
     mockReset(repositoryMock);
     mockReset(loggerMock);
+  });
+
+  it('Should find users by ids', async () => {
+    repositoryMock.findBy.mockImplementation(async () => [userMock]);
+    const result = await datasource.findManyByIds(['132123']);
+
+    expect(result).toBeInstanceOf(Right);
+    expect((result as Right<unknown[]>).success[0]).toBeInstanceOf(User);
+  });
+
+  it('Should handle error finding by ids', async () => {
+    repositoryMock.findBy.mockRejectedValue(Error('HOLLY COW'));
+    const result = await datasource.findManyByIds(['132123']);
+
+    expect(result).toBeInstanceOf(Left);
+    expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
   });
 
   it('Should find user by email', async () => {
@@ -38,7 +55,7 @@ describe('InternalUserDatasource Tests', () => {
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
   });
 
-  it('Should find user by _id', async () => {
+  it('Should find user by id', async () => {
     repositoryMock.findOneBy.mockImplementation(async () => userMock);
     const result = await datasource.findById(new ObjectId('660b3b8193fa2af84dc04cd6'));
 
@@ -46,7 +63,7 @@ describe('InternalUserDatasource Tests', () => {
     expect((result as Right<unknown>).success).toBeInstanceOf(UserSchema);
   });
 
-  it('Should handle error finding by _id', async () => {
+  it('Should handle error finding by id', async () => {
     repositoryMock.findOneBy.mockRejectedValue(Error('HOLLY CHEAT'));
     const result = await datasource.findById(new ObjectId('660b3b8193fa2af84dc04cd6'));
 

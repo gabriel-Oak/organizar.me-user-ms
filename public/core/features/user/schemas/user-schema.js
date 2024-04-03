@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="0a3de8ff-1d98-5c30-aad9-4da3e882c9e6")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="ed04622b-9e8d-5f79-8faa-c3a73cbb9ab2")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -32,7 +32,7 @@ let UserSchema = class UserSchema {
     }
     getProps() {
         return {
-            _id: this._id?.toString(),
+            id: this.id?.toString(),
             name: this.name,
             email: this.email
         };
@@ -47,7 +47,7 @@ let UserSchema = class UserSchema {
 __decorate([
     (0, typeorm_1.ObjectIdColumn)(),
     __metadata("design:type", typeorm_1.ObjectId)
-], UserSchema.prototype, "_id", void 0);
+], UserSchema.prototype, "id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
@@ -83,4 +83,4 @@ UserSchema = __decorate([
 ], UserSchema);
 exports.default = UserSchema;
 //# sourceMappingURL=user-schema.js.map
-//# debugId=0a3de8ff-1d98-5c30-aad9-4da3e882c9e6
+//# debugId=ed04622b-9e8d-5f79-8faa-c3a73cbb9ab2

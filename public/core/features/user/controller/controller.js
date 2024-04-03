@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1849041c-f0bb-5187-a2c1-775da8ba50ba")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="44ad23df-50d6-5101-9ba3-fc8432f34ba7")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -83,7 +83,7 @@ let UserController = class UserController {
         const { body } = req;
         const result = await this.changePassword.execute({
             ...body,
-            userId: user._id
+            userId: user.id
         });
         if (!result.isError)
             return await reply.send({ message: result.success });
@@ -165,4 +165,4 @@ UserController = __decorate([
 ], UserController);
 exports.default = UserController;
 //# sourceMappingURL=controller.js.map
-//# debugId=1849041c-f0bb-5187-a2c1-775da8ba50ba
+//# debugId=44ad23df-50d6-5101-9ba3-fc8432f34ba7
