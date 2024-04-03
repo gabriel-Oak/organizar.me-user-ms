@@ -1,5 +1,5 @@
-import UserModel from '../../models/user-model';
+import UserSchema from '../../schemas/user-schema';
 
 export interface ISignUserTokenUsecase {
-  execute: (user: UserModel) => string;
+  execute: (user: UserSchema) => string;
 }

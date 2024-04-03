@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify';
-import UserModel from '../../features/user/models/user-model';
+import UserSchema from '../../features/user/schemas/user-schema';
 import { IDecodeUserTokenUsecase, decodeUserTokenErrors } from '../../features/user/usecases/decode-user-token/types';
 import HttpError from '../errors/http-error';
 import createLoggerService from '../services/logger-service';
@@ -31,11 +31,11 @@ export default function registerController(
         const actionPath = p === '/' ? '' : p
         app[method](`${path}${actionPath}`, async (req, rep) => {
           try {
-            let user: UserModel;
+            let user: UserSchema;
             if (privateRoutes?.includes(action)) {
               const decoder = createContainer().get<IDecodeUserTokenUsecase>('IDecodeUserTokenUsecase');
               const { auth } = req.headers;
-              const decodeResult: Either<decodeUserTokenErrors, UserModel> = await decoder.execute(String(auth));
+              const decodeResult: Either<decodeUserTokenErrors, UserSchema> = await decoder.execute(String(auth));
 
               if (decodeResult.isError) {
                 const error = new HttpError({

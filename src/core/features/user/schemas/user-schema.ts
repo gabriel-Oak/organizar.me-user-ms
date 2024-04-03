@@ -10,7 +10,7 @@ export interface UserProps {
 }
 
 @Entity('user')
-export default class UserModel implements UserProps {
+export default class UserSchema implements UserProps {
   @ObjectIdColumn()
   public _id?: ObjectId;
 

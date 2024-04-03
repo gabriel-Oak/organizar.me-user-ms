@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="164bf72b-ab5d-5276-82e0-ad0fd5531d44")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="7a276f3d-f518-5f50-ad16-ae39c98cd554")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -17,7 +17,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_model_1 = __importDefault(require("../../models/user-model"));
+const user_schema_1 = __importDefault(require("../../schemas/user-schema"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = require("../../../../utils/constants");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
@@ -27,7 +27,7 @@ let SignUserTokenUsecase = class SignUserTokenUsecase {
         this.chage = chage;
     }
     execute(user) {
-        const newUser = new user_model_1.default({ ...user, password: undefined });
+        const newUser = new user_schema_1.default({ ...user, password: undefined });
         void this.chage.set(`user:${user._id.toString()}`, newUser.getProps());
         return jsonwebtoken_1.default.sign(newUser.getProps(), constants_1.JWT_SECRET, { expiresIn: '24h' });
     }
@@ -39,4 +39,4 @@ SignUserTokenUsecase = __decorate([
 ], SignUserTokenUsecase);
 exports.default = SignUserTokenUsecase;
 //# sourceMappingURL=sign-user-token.js.map
-//# debugId=164bf72b-ab5d-5276-82e0-ad0fd5531d44
+//# debugId=7a276f3d-f518-5f50-ad16-ae39c98cd554

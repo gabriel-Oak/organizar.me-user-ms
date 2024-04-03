@@ -1,6 +1,6 @@
 import { ISignUserTokenUsecase } from './types';
 import SignUserTokenUsecase from './sign-user-token';
-import UserModel from '../../models/user-model';
+import UserSchema from '../../schemas/user-schema';
 import { mock, mockReset } from 'jest-mock-extended';
 import { ICacheService } from '../../../../utils/services/cache-service/types';
 import { ObjectId } from 'typeorm';
@@ -14,7 +14,7 @@ describe('SignUserUsecase Tests', () => {
   });
 
   it('Should sign token', () => {
-    const token = usecase.execute(new UserModel({
+    const token = usecase.execute(new UserSchema({
       email: 'olha@gmail.com',
       name: 'Hello World',
       password: 'oyuweyfyewf7yisdfiuhsdf',

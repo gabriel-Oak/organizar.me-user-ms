@@ -1,13 +1,13 @@
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserModel from '../../models/user-model';
+import UserSchema from '../../schemas/user-schema';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from './types';
 import UpdateUserUsecase from './update-user';
 import { ObjectId } from 'typeorm';
 
 describe('UpdateUserUsecase Tests', () => {
-  const userMock = mock<UserModel>();
+  const userMock = mock<UserSchema>();
   const payloadMock = {
     _id: mock<ObjectId>(),
     name: 'string',

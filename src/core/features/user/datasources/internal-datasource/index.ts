@@ -3,7 +3,7 @@
 import { IInternalUserDatasource } from './types';
 import InternalUserDatasource from './internal-user-datasource';
 import DatabaseService from '../../../../utils/services/database-service';
-import UserModel from '../../models/user-model';
+import UserSchema from '../../schemas/user-schema';
 import createLoggerService from '../../../../utils/services/logger-service';
 
 let instance: IInternalUserDatasource;
@@ -11,7 +11,7 @@ let instance: IInternalUserDatasource;
 const createInternalUserDatasource = (): IInternalUserDatasource => {
   if (!instance) {
     instance = new InternalUserDatasource(
-      DatabaseService.getRepository(UserModel),
+      DatabaseService.getRepository(UserSchema),
       createLoggerService()
     );
   }

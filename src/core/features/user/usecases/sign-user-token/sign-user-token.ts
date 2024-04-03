@@ -1,4 +1,4 @@
-import UserModel from '../../models/user-model';
+import UserSchema from '../../schemas/user-schema';
 import { ISignUserTokenUsecase } from './types';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
@@ -13,8 +13,8 @@ export default class SignUserTokenUsecase implements ISignUserTokenUsecase {
     private readonly chage: ICacheService
   ) { }
 
-  execute(user: UserModel) {
-    const newUser = new UserModel({ ...user, password: undefined });
+  execute(user: UserSchema) {
+    const newUser = new UserSchema({ ...user, password: undefined });
     void this.chage.set(`user:${user._id!.toString()!}`, newUser.getProps());
 
     return jwt.sign(newUser.getProps(), JWT_SECRET, { expiresIn: '24h' });

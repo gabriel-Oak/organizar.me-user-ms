@@ -1,6 +1,6 @@
 import { Either, Left } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import UserModel, { UserProps } from '../../models/user-model';
+import UserSchema, { UserProps } from '../../schemas/user-schema';
 import { DecodeUserInvalidTokenError, DecodeUserNotFoundError, decodeUserTokenErrors, IDecodeUserTokenUsecase } from './types';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
@@ -21,7 +21,7 @@ export default class DecodeUserTokenUsecase implements IDecodeUserTokenUsecase {
       const userResult = await this.userDatasource.findById(new ObjectId(decodedUser._id));
 
       if (userResult.isError || userResult.success) {
-        return userResult as unknown as Either<decodeUserTokenErrors, UserModel>;
+        return userResult as unknown as Either<decodeUserTokenErrors, UserSchema>;
       }
 
       return new Left(new DecodeUserNotFoundError());

@@ -2,7 +2,7 @@ import { inject } from 'inversify';
 import Injectable from '../../../../utils/decorators/injectable';
 import { Left } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import UserModel, { UserProps } from '../../models/user-model';
+import UserSchema, { UserProps } from '../../schemas/user-schema';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from './types';
 
 @Injectable('IInsertUserUsecase')
@@ -17,7 +17,7 @@ export default class InsertUserUsecase implements IInsertUserUsecase {
     if (existResult.isError) return existResult;
     if (existResult.success) return new Left(new InsertUserAlreadyExist());
 
-    const userResult = await this.userDatasource.save(new UserModel(user));
+    const userResult = await this.userDatasource.save(new UserSchema(user));
     return userResult;
   }
 }

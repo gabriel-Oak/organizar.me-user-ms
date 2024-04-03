@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="df23ed66-c5d5-5e5a-bbda-e3c4d1ce8790")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="003104e0-1ef9-5453-9dcb-acc84683e67b")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -90,10 +90,10 @@ let InternalUserDatasource = class InternalUserDatasource {
 };
 InternalUserDatasource = __decorate([
     (0, injectable_1.default)('IInternalUserDatasource'),
-    __param(0, (0, inversify_1.inject)('Repository<UserModel>')),
+    __param(0, (0, inversify_1.inject)('Repository<UserSchema>')),
     __param(1, (0, inversify_1.inject)('ILoggerService')),
     __metadata("design:paramtypes", [typeorm_1.Repository, Object])
 ], InternalUserDatasource);
 exports.default = InternalUserDatasource;
 //# sourceMappingURL=internal-user-datasource.js.map
-//# debugId=df23ed66-c5d5-5e5a-bbda-e3c4d1ce8790
+//# debugId=003104e0-1ef9-5453-9dcb-acc84683e67b

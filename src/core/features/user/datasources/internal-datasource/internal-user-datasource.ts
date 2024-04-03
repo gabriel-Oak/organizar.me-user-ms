@@ -1,7 +1,7 @@
 import { ILoggerService } from '../../../../utils/services/logger-service/types';
 import { Left, Right } from '../../../../utils/types';
 import { Repository } from 'typeorm';
-import UserModel from '../../models/user-model';
+import UserSchema from '../../schemas/user-schema';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import Injectable from '../../../../utils/decorators/injectable';
 import { inject } from 'inversify';
@@ -10,7 +10,7 @@ import { ObjectId } from 'mongodb';
 @Injectable('IInternalUserDatasource')
 export default class InternalUserDatasource implements IInternalUserDatasource {
   constructor(
-    @inject('Repository<UserModel>') private readonly userRepository: Repository<UserModel>,
+    @inject('Repository<UserSchema>') private readonly userRepository: Repository<UserSchema>,
     @inject('ILoggerService') private readonly logger: ILoggerService
   ) { }
 
@@ -42,7 +42,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async save(user: UserModel) {
+  async save(user: UserSchema) {
     try {
       const result = await this.userRepository.save(user);
       result.password = undefined;
@@ -57,7 +57,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async update(user: UserModel) {
+  async update(user: UserSchema) {
     try {
       await this.userRepository.update(user._id!, user);
       return new Right(null);

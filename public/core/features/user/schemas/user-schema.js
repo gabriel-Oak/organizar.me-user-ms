@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="3b2f2134-d496-55a4-97b5-0b3a218fb934")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="0a3de8ff-1d98-5c30-aad9-4da3e882c9e6")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -14,7 +14,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const bcryptjs_1 = require("bcryptjs");
 const constants_1 = require("../../../utils/constants");
-let UserModel = class UserModel {
+let UserSchema = class UserSchema {
     constructor(props) {
         Object.assign(this, props);
     }
@@ -47,7 +47,7 @@ let UserModel = class UserModel {
 __decorate([
     (0, typeorm_1.ObjectIdColumn)(),
     __metadata("design:type", typeorm_1.ObjectId)
-], UserModel.prototype, "_id", void 0);
+], UserSchema.prototype, "_id", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
@@ -55,32 +55,32 @@ __decorate([
         nullable: false
     }),
     __metadata("design:type", String)
-], UserModel.prototype, "name", void 0);
+], UserSchema.prototype, "name", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
         unique: true
     }),
     __metadata("design:type", String)
-], UserModel.prototype, "email", void 0);
+], UserSchema.prototype, "email", void 0);
 __decorate([
     (0, typeorm_1.Column)({
         type: 'text',
         nullable: false
     }),
     __metadata("design:type", String)
-], UserModel.prototype, "password", void 0);
+], UserSchema.prototype, "password", void 0);
 __decorate([
     (0, typeorm_1.BeforeInsert)(),
     (0, typeorm_1.BeforeUpdate)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], UserModel.prototype, "hashPassword", null);
-UserModel = __decorate([
+], UserSchema.prototype, "hashPassword", null);
+UserSchema = __decorate([
     (0, typeorm_1.Entity)('user'),
     __metadata("design:paramtypes", [Object])
-], UserModel);
-exports.default = UserModel;
-//# sourceMappingURL=user-model.js.map
-//# debugId=3b2f2134-d496-55a4-97b5-0b3a218fb934
+], UserSchema);
+exports.default = UserSchema;
+//# sourceMappingURL=user-schema.js.map
+//# debugId=0a3de8ff-1d98-5c30-aad9-4da3e882c9e6

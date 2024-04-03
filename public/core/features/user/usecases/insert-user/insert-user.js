@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="a362d236-ead8-573e-9995-249b6f53554c")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="8a3fe7ec-869c-564f-a32f-e0311049d9ac")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -20,7 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const inversify_1 = require("inversify");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
 const types_1 = require("../../../../utils/types");
-const user_model_1 = __importDefault(require("../../models/user-model"));
+const user_schema_1 = __importDefault(require("../../schemas/user-schema"));
 const types_2 = require("./types");
 let InsertUserUsecase = class InsertUserUsecase {
     constructor(userDatasource) {
@@ -32,7 +32,7 @@ let InsertUserUsecase = class InsertUserUsecase {
             return existResult;
         if (existResult.success)
             return new types_1.Left(new types_2.InsertUserAlreadyExist());
-        const userResult = await this.userDatasource.save(new user_model_1.default(user));
+        const userResult = await this.userDatasource.save(new user_schema_1.default(user));
         return userResult;
     }
 };
@@ -43,4 +43,4 @@ InsertUserUsecase = __decorate([
 ], InsertUserUsecase);
 exports.default = InsertUserUsecase;
 //# sourceMappingURL=insert-user.js.map
-//# debugId=a362d236-ead8-573e-9995-249b6f53554c
+//# debugId=8a3fe7ec-869c-564f-a32f-e0311049d9ac

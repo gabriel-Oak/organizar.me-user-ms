@@ -1,6 +1,6 @@
 import { z, ZodError, ZodIssue } from 'zod';
 import { Left, Right } from '../../../../utils/types';
-import { UserProps } from '../../models/user-model';
+import { UserProps } from '../../schemas/user-schema';
 import { IValidateUserUsecase, ValidateUserError } from './types';
 import Injectable from '../../../../utils/decorators/injectable';
 

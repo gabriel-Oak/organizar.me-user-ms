@@ -1,5 +1,5 @@
 import { Left, Right } from '../../../../utils/types';
-import { UserProps } from '../../models/user-model';
+import { UserProps } from '../../schemas/user-schema';
 import { IValidateUserUsecase } from './types';
 import ValidateUserUsecase from './validate-user';
 

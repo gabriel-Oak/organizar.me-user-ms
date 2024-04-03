@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6086a919-c695-5703-a270-40ef7de9db43")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1849041c-f0bb-5187-a2c1-775da8ba50ba")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -19,7 +19,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const controller_1 = __importDefault(require("../../../utils/decorators/controller/controller"));
 const http_error_1 = __importDefault(require("../../../utils/errors/http-error"));
-const user_model_1 = __importDefault(require("../models/user-model"));
+const user_schema_1 = __importDefault(require("../schemas/user-schema"));
 const private_route_1 = __importDefault(require("../../../utils/decorators/controller/private-route"));
 const post_1 = __importDefault(require("../../../utils/decorators/controller/post"));
 const get_1 = __importDefault(require("../../../utils/decorators/controller/get"));
@@ -127,28 +127,28 @@ __decorate([
     (0, get_1.default)('/decode'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "decode", null);
 __decorate([
     (0, patch_1.default)('/change-password'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "changeUserPassword", null);
 __decorate([
     (0, patch_1.default)('/update-user'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "update", null);
 __decorate([
     (0, del_1.default)('/remove'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_model_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "remove", null);
 UserController = __decorate([
@@ -165,4 +165,4 @@ UserController = __decorate([
 ], UserController);
 exports.default = UserController;
 //# sourceMappingURL=controller.js.map
-//# debugId=6086a919-c695-5703-a270-40ef7de9db43
+//# debugId=1849041c-f0bb-5187-a2c1-775da8ba50ba

@@ -1,8 +1,8 @@
 import { FastifyReply } from 'fastify';
 import { FastifyRequestType } from 'fastify/types/type-provider';
-import UserModel from '../../../features/user/models/user-model';
+import UserSchema from '../../../features/user/schemas/user-schema';
 
-export type controllerAction = (req: FastifyRequestType, resp: FastifyReply, user?: UserModel) => (
+export type controllerAction = (req: FastifyRequestType, resp: FastifyReply, user?: UserSchema) => (
   unknown | Promise<unknown>
 );
 

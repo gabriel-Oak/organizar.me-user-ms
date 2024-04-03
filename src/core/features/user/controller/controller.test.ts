@@ -4,7 +4,7 @@ import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from '../usecases/insert-user/types';
 import { IValidateUserUsecase, ValidateUserError } from '../usecases/validate-user/types';
 import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
-import UserModel, { UserProps } from '../models/user-model';
+import UserSchema, { UserProps } from '../schemas/user-schema';
 import UserController from './controller';
 import { Left, Right } from '../../../utils/types';
 import HttpError from '../../../utils/errors/http-error';
@@ -35,7 +35,7 @@ describe('UserController Tests', () => {
   const updateUserMock = mock<IUpdateUserUsecase>();
   const removeUserMock = mock<IRemoveUserUsecase>();
 
-  const userMock = new UserModel({ ...body, password: undefined });
+  const userMock = new UserSchema({ ...body, password: undefined });
   const auth = 'iaehdiosahd8aksjhdjahsd8hjsakh.ajsihdkasdkashdkhaskdjhaksd.jkasdjkhaskdhaksdhkasjdha';
 
   const controller = new UserController(
@@ -93,13 +93,13 @@ describe('UserController Tests', () => {
     validateUserMock.execute
       .mockImplementation(() => new Right(null));
     insertUserMock.execute
-      .mockImplementation(async () => new Right(new UserModel({ ...body, password: undefined })));
+      .mockImplementation(async () => new Right(new UserSchema({ ...body, password: undefined })));
     signUserTokenMock.execute
       .mockImplementation(() => auth);
     await controller.new(requestMock, replyMock);
 
     expect(replyMock.send).toHaveBeenCalledWith({
-      user: new UserModel({ ...body, password: undefined }),
+      user: new UserSchema({ ...body, password: undefined }),
       auth
     });
   });
