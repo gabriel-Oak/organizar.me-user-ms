@@ -1,6 +1,6 @@
 import { ILoggerService } from '../../../../utils/services/logger-service/types';
 import { Left, Right } from '../../../../utils/types';
-import { In, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import UserSchema from '../../schemas/user-schema';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
 import Injectable from '../../../../utils/decorators/injectable';
@@ -11,15 +11,30 @@ import User from '../../entities/user';
 @Injectable('IInternalUserDatasource')
 export default class InternalUserDatasource implements IInternalUserDatasource {
   constructor(
-    @inject('Repository<UserSchema>') private readonly userRepository: Repository<UserSchema>,
-    @inject('ILoggerService') private readonly logger: ILoggerService
+    @inject('Repository<UserSchema>')
+    private readonly userRepository: Repository<UserSchema>,
+
+    @inject('ILoggerService')
+    private readonly logger: ILoggerService,
+
+    @inject('DataSource')
+    private readonly dataSource: DataSource
   ) { }
 
   async findManyByIds(userIds: string[]) {
     try {
-      const users = await this.userRepository.findBy({ id: In(userIds) });
+      const users: UserSchema[] = await this.dataSource
+        .getMongoRepository(UserSchema)
+        .find({
+          where: {
+            _id: { $in: userIds.map((userId) => new ObjectId(userId)) }
+          }
+        });
+
       return new Right(users.map((user) => new User(user.getProps())));
     } catch (e: any) {
+      console.log(e);
+
       const error = new InternalUserDatasourceError(
         e.message || `Oops, desculpe, tivemos um problema buscando por (${userIds.join(', ')})`,
         { ...e, userIds }

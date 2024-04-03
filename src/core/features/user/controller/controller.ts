@@ -16,6 +16,7 @@ import Patch from '../../../utils/decorators/controller/patch';
 import { inject } from 'inversify';
 import { IRemoveUserUsecase } from '../usecases/remove-user/types';
 import Del from '../../../utils/decorators/controller/del';
+import { IListUsersUsecase, ListUsersIncompleteResult } from '../usecases/list-users/types';
 
 @Controller('/user')
 export default class UserController {
@@ -42,9 +43,31 @@ export default class UserController {
     private readonly updateUser: IUpdateUserUsecase,
 
     @inject('IRemoveUserUsecase')
-    private readonly removeUser: IRemoveUserUsecase
+    private readonly removeUser: IRemoveUserUsecase,
 
+    @inject('IListUsersUsecase')
+    private readonly listUsers: IListUsersUsecase
   ) { }
+
+  @Get('/list')
+  async list(req: FastifyRequest, reply: FastifyReply) {
+    const userIds = (req.query as any)?.userIds || '';
+    const result = await this.listUsers.execute(userIds.split(','));
+
+    if (result.isError) {
+      const error = new HttpError({
+        ...result.error,
+        statusCode: result.error.type === 'list-user-validation'
+          ? 400
+          : 500
+      });
+      return await reply.code(error.statusCode).send(error);
+    }
+
+    return await reply.code(
+      result.success instanceof ListUsersIncompleteResult ? 207 : 200
+    ).send(result.success);
+  }
 
   @Post('/new')
   async new(req: FastifyRequest, reply: FastifyReply) {

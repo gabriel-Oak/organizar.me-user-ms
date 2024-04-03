@@ -1,10 +1,1 @@
-// import  './sign-user-token';
-import createCacheService from '../../../../utils/services/cache-service';
-import SignUserTokenUsecase from './sign-user-token';
-import { ISignUserTokenUsecase } from './types';
-
-const createSignUserTokenUsecase = (): ISignUserTokenUsecase => new SignUserTokenUsecase(
-  createCacheService()
-);
-
-export default createSignUserTokenUsecase;
+import './sign-user-token';

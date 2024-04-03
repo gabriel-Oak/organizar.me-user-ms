@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="44ad23df-50d6-5101-9ba3-fc8432f34ba7")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="7aafb8db-ddc0-5a87-b868-24f3492bb689")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -26,8 +26,9 @@ const get_1 = __importDefault(require("../../../utils/decorators/controller/get"
 const patch_1 = __importDefault(require("../../../utils/decorators/controller/patch"));
 const inversify_1 = require("inversify");
 const del_1 = __importDefault(require("../../../utils/decorators/controller/del"));
+const types_1 = require("../usecases/list-users/types");
 let UserController = class UserController {
-    constructor(validateUser, insertUser, signUserToken, authenticateUser, decodeUserToken, changePassword, updateUser, removeUser) {
+    constructor(validateUser, insertUser, signUserToken, authenticateUser, decodeUserToken, changePassword, updateUser, removeUser, listUsers) {
         this.validateUser = validateUser;
         this.insertUser = insertUser;
         this.signUserToken = signUserToken;
@@ -36,6 +37,21 @@ let UserController = class UserController {
         this.changePassword = changePassword;
         this.updateUser = updateUser;
         this.removeUser = removeUser;
+        this.listUsers = listUsers;
+    }
+    async list(req, reply) {
+        const userIds = req.query?.userIds || '';
+        const result = await this.listUsers.execute(userIds.split(','));
+        if (result.isError) {
+            const error = new http_error_1.default({
+                ...result.error,
+                statusCode: result.error.type === 'list-user-validation'
+                    ? 400
+                    : 500
+            });
+            return await reply.code(error.statusCode).send(error);
+        }
+        return await reply.code(result.success instanceof types_1.ListUsersIncompleteResult ? 207 : 200).send(result.success);
     }
     async new(req, reply) {
         const payload = req.body;
@@ -112,6 +128,12 @@ let UserController = class UserController {
     }
 };
 __decorate([
+    (0, get_1.default)('/list'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "list", null);
+__decorate([
     (0, post_1.default)('/new'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
@@ -161,8 +183,9 @@ UserController = __decorate([
     __param(5, (0, inversify_1.inject)('IChangePasswordUsecase')),
     __param(6, (0, inversify_1.inject)('IUpdateUserUsecase')),
     __param(7, (0, inversify_1.inject)('IRemoveUserUsecase')),
-    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object])
+    __param(8, (0, inversify_1.inject)('IListUsersUsecase')),
+    __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object])
 ], UserController);
 exports.default = UserController;
 //# sourceMappingURL=controller.js.map
-//# debugId=44ad23df-50d6-5101-9ba3-fc8432f34ba7
+//# debugId=7aafb8db-ddc0-5a87-b868-24f3492bb689

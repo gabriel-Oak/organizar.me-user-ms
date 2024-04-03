@@ -16,6 +16,8 @@ import { InternalUserDatasourceError } from '../datasources/internal-datasource/
 import { ChangePasswordInvalidOldPassError, ChangePasswordInvalidPassError, IChangePasswordUsecase } from '../usecases/change-password/types';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from '../usecases/update-user/types';
 import { IRemoveUserUsecase } from '../usecases/remove-user/types';
+import { IListUsersUsecase, ListUsersCompleteResult, ListUsersIncompleteResult, ListUsersValidationError } from '../usecases/list-users/types';
+import User from '../entities/user';
 
 describe('UserController Tests', () => {
   const body: UserSchemaProps = {
@@ -34,8 +36,10 @@ describe('UserController Tests', () => {
   const changePasswordMock = mock<IChangePasswordUsecase>();
   const updateUserMock = mock<IUpdateUserUsecase>();
   const removeUserMock = mock<IRemoveUserUsecase>();
+  const listUsersMock = mock<IListUsersUsecase>();
 
-  const userMock = new UserSchema({ ...body, password: undefined });
+  const userSchemaMock = new UserSchema({ ...body, password: undefined });
+  const userMock = new User({ ...body, id: '1236123123' });
   const auth = 'iaehdiosahd8aksjhdjahsd8hjsakh.ajsihdkasdkashdkhaskdjhaksd.jkasdjkhaskdhaksdhkasjdha';
 
   const controller = new UserController(
@@ -46,7 +50,8 @@ describe('UserController Tests', () => {
     decodeUserTokenMock,
     changePasswordMock,
     updateUserMock,
-    removeUserMock
+    removeUserMock,
+    listUsersMock
   );
 
   beforeEach(() => {
@@ -60,7 +65,55 @@ describe('UserController Tests', () => {
     mockReset(changePasswordMock);
     mockReset(updateUserMock);
     mockReset(removeUserMock);
+    mockReset(listUsersMock);
+
     replyMock.code.mockImplementation(() => replyMock);
+  });
+
+  it('Should return validation error listing users', async () => {
+    listUsersMock.execute
+      .mockImplementation(async () => new Left(new ListUsersValidationError()));
+    await controller.list(requestMock, replyMock);
+
+    expect(replyMock.code).toHaveBeenCalledWith(400);
+    expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
+      message: 'Você precisa informar uma lista valida de ids',
+      statusCode: 400
+    }));
+  });
+
+  it('Should return datasource error listing users', async () => {
+    listUsersMock.execute
+      .mockImplementation(async () => new Left(new InternalUserDatasourceError('Oops')));
+    await controller.list(requestMock, replyMock);
+
+    expect(replyMock.code).toHaveBeenCalledWith(500);
+    expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
+      message: 'Oops',
+      statusCode: 500
+    }));
+  });
+
+  it('Should return partial result listing users', async () => {
+    const resultMock = new ListUsersIncompleteResult({
+      users: [userMock],
+      usersNotFound: ['12345678990']
+    });
+
+    listUsersMock.execute.mockImplementation(async () => new Right(resultMock));
+    await controller.list(requestMock, replyMock);
+
+    expect(replyMock.code).toHaveBeenCalledWith(207);
+    expect(replyMock.send).toHaveBeenCalledWith(resultMock);
+  });
+
+  it('Should return result listing users', async () => {
+    const resultMock = new ListUsersCompleteResult([userMock]);
+    listUsersMock.execute.mockImplementation(async () => new Right(resultMock));
+    await controller.list(requestMock, replyMock);
+
+    expect(replyMock.code).toHaveBeenCalledWith(200);
+    expect(replyMock.send).toHaveBeenCalledWith(resultMock);
   });
 
   it('Should return paylod invalid creating user', async () => {
@@ -142,21 +195,21 @@ describe('UserController Tests', () => {
 
   it('Should return authenticated user', async () => {
     authenticateUserMock.execute
-      .mockImplementation(async () => new Right(userMock));
+      .mockImplementation(async () => new Right(userSchemaMock));
     signUserTokenMock.execute
       .mockImplementation(() => auth);
     await controller.authenticate(requestMock, replyMock);
 
     expect(replyMock.send).toHaveBeenCalledWith({
-      user: userMock,
+      user: userSchemaMock,
       auth
     });
   });
 
   it('Should decode user', async () => {
-    decodeUserTokenMock.execute.mockImplementation(async () => new Right(userMock));
-    await controller.decode({ ...requestMock, headers: { auth } }, replyMock, userMock);
-    expect(replyMock.send).toHaveBeenCalledWith(userMock.getProps());
+    decodeUserTokenMock.execute.mockImplementation(async () => new Right(userSchemaMock));
+    await controller.decode({ ...requestMock, headers: { auth } }, replyMock, userSchemaMock);
+    expect(replyMock.send).toHaveBeenCalledWith(userSchemaMock.getProps());
   });
 
   it('Should change user password', async () => {
@@ -165,7 +218,7 @@ describe('UserController Tests', () => {
     await controller.changeUserPassword(
       { ...requestMock, headers: { auth } },
       replyMock,
-      userMock
+      userSchemaMock
     );
 
     expect(replyMock.send).toHaveBeenCalledWith({ message: 'Success my boy' });
@@ -177,7 +230,7 @@ describe('UserController Tests', () => {
     await controller.changeUserPassword(
       { ...requestMock, headers: { auth } },
       replyMock,
-      userMock
+      userSchemaMock
     );
 
     expect(replyMock.code).toHaveBeenCalledWith(400);
@@ -193,7 +246,7 @@ describe('UserController Tests', () => {
     await controller.changeUserPassword(
       { ...requestMock, headers: { auth } },
       replyMock,
-      userMock
+      userSchemaMock
     );
 
     expect(replyMock.code).toHaveBeenCalledWith(400);
@@ -209,7 +262,7 @@ describe('UserController Tests', () => {
     await controller.update(
       { ...requestMock, headers: { auth } },
       replyMock,
-      userMock
+      userSchemaMock
     );
 
     expect(replyMock.send).toHaveBeenCalled();
@@ -221,7 +274,7 @@ describe('UserController Tests', () => {
     await controller.update(
       { ...requestMock, headers: { auth } },
       replyMock,
-      userMock
+      userSchemaMock
     );
 
     expect(replyMock.code).toHaveBeenCalledWith(403);
@@ -237,7 +290,7 @@ describe('UserController Tests', () => {
     await controller.update(
       { ...requestMock, headers: { auth } },
       replyMock,
-      userMock
+      userSchemaMock
     );
 
     expect(replyMock.code).toHaveBeenCalledWith(500);
@@ -249,15 +302,15 @@ describe('UserController Tests', () => {
   it('Should return datasource error removing user', async () => {
     const error = new InternalUserDatasourceError('ohno');
     removeUserMock.execute.mockImplementation(async () => new Left(error));
-    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userMock);
+    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userSchemaMock);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError(error));
     expect(replyMock.code).toHaveBeenCalledWith(500);
   });
 
   it('Should return ok removing user', async () => {
     removeUserMock.execute
-      .mockImplementation(async () => new Right(userMock));
-    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userMock);
+      .mockImplementation(async () => new Right(userSchemaMock));
+    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userSchemaMock);
     expect(replyMock.send).toHaveBeenCalled();
     expect(replyMock.code).not.toHaveBeenCalled();
   });

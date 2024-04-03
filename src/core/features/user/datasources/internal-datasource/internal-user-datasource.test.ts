@@ -1,5 +1,5 @@
 import { mock, mockReset } from 'jest-mock-extended';
-import { Repository } from 'typeorm';
+import { DataSource, MongoRepository, Repository } from 'typeorm';
 import UserSchema from '../../schemas/user-schema';
 import { ILoggerService } from '../../../../utils/services/logger-service/types';
 import InternalUserDatasource from './internal-user-datasource';
@@ -12,28 +12,34 @@ describe('InternalUserDatasource Tests', () => {
   const repositoryMock = mock<Repository<UserSchema>>();
   const loggerMock = mock<ILoggerService>();
   const userMock = new UserSchema();
+  const datasourceMock = mock<DataSource>();
+  const mongoRepositoryMock = mock<MongoRepository<UserSchema>>();
 
   const datasource: IInternalUserDatasource = new InternalUserDatasource(
     repositoryMock,
-    loggerMock
+    loggerMock,
+    datasourceMock
   );
 
   beforeEach(() => {
     mockReset(repositoryMock);
     mockReset(loggerMock);
+    mockReset(datasourceMock);
+
+    datasourceMock.getMongoRepository.mockImplementation(() => mongoRepositoryMock);
   });
 
   it('Should find users by ids', async () => {
-    repositoryMock.findBy.mockImplementation(async () => [userMock]);
-    const result = await datasource.findManyByIds(['132123']);
+    mongoRepositoryMock.find.mockImplementation(async () => [userMock]);
+    const result = await datasource.findManyByIds(['660b3b8193fa2af84dc04cd6']);
 
     expect(result).toBeInstanceOf(Right);
     expect((result as Right<unknown[]>).success[0]).toBeInstanceOf(User);
   });
 
   it('Should handle error finding by ids', async () => {
-    repositoryMock.findBy.mockRejectedValue(Error('HOLLY COW'));
-    const result = await datasource.findManyByIds(['132123']);
+    mongoRepositoryMock.find.mockRejectedValue(Error('HOLLY COW'));
+    const result = await datasource.findManyByIds(['660b3b8193fa2af84dc04cd6']);
 
     expect(result).toBeInstanceOf(Left);
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
