@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="d336fa8b-dd86-5170-8c1d-b95ebf8202ca")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="34e69be8-21ca-53a9-ab4e-7f2889fa337e")}catch(e){}}();
 
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
@@ -57,4 +57,4 @@ function registerController(path, controller, app) {
 }
 exports.default = registerController;
 //# sourceMappingURL=register-controller.js.map
-//# debugId=d336fa8b-dd86-5170-8c1d-b95ebf8202ca
+//# debugId=34e69be8-21ca-53a9-ab4e-7f2889fa337e

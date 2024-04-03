@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="e6cc04c9-415b-5f2c-8538-01fa0ba07ba3")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1d69bc63-0fd3-59e6-9ca4-8fee7a0c2d74")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -17,7 +17,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const user_schema_1 = __importDefault(require("../../schemas/user-schema"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = require("../../../../utils/constants");
 const injectable_1 = __importDefault(require("../../../../utils/decorators/injectable"));
@@ -27,9 +26,13 @@ let SignUserTokenUsecase = class SignUserTokenUsecase {
         this.chage = chage;
     }
     execute(user) {
-        const newUser = new user_schema_1.default({ ...user, password: undefined });
-        void this.chage.set(`user:${user.id.toString()}`, newUser.getProps());
-        return jsonwebtoken_1.default.sign(newUser.getProps(), constants_1.JWT_SECRET, { expiresIn: '24h' });
+        const { email, name, id } = user;
+        void this.chage.set(`user:${user.id}`, {
+            email, name, id
+        });
+        return jsonwebtoken_1.default.sign({
+            email, name, id
+        }, constants_1.JWT_SECRET, { expiresIn: '24h' });
     }
 };
 SignUserTokenUsecase = __decorate([
@@ -39,4 +42,4 @@ SignUserTokenUsecase = __decorate([
 ], SignUserTokenUsecase);
 exports.default = SignUserTokenUsecase;
 //# sourceMappingURL=sign-user-token.js.map
-//# debugId=e6cc04c9-415b-5f2c-8538-01fa0ba07ba3
+//# debugId=1d69bc63-0fd3-59e6-9ca4-8fee7a0c2d74

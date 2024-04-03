@@ -23,7 +23,7 @@ Sentry.init({
 export default async function startServer() {
   const container = createContainer();
   const logger = container.get<ILoggerService>('ILoggerService');
-  const port = env.PORT ?? 8080;
+  const port = env.PORT ?? 3001;
 
   const app = await createApp();
   await app.listen({ port: +port, host: '0.0.0.0' })

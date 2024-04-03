@@ -3,7 +3,6 @@ import Injectable from '../../../../utils/decorators/injectable';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
 import { ChangePasswordInvalidOldPassError, ChangePasswordInvalidPassError, ChangePasswordPayload, IChangePasswordUsecase } from './types';
-import { ObjectId } from 'mongodb';
 
 @Injectable('IChangePasswordUsecase')
 export default class ChangePasswordUsecase implements IChangePasswordUsecase {
@@ -17,7 +16,7 @@ export default class ChangePasswordUsecase implements IChangePasswordUsecase {
       return new Left(new ChangePasswordInvalidPassError());
     }
 
-    const userResult = await this.userDatasource.findById(new ObjectId(payload.userId));
+    const userResult = await this.userDatasource.findById(payload.userId);
     if (userResult.isError) return userResult;
     if (!userResult.success) return new Left(new ChangePasswordInvalidPassError());
     const { success: user } = userResult;

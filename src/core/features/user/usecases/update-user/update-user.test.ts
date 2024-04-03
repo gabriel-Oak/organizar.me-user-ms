@@ -1,13 +1,14 @@
+import 'reflect-metadata';
 import { mock, mockReset } from 'jest-mock-extended';
 import { Left, Right } from '../../../../utils/types';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserSchema from '../../schemas/user-schema';
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from './types';
 import UpdateUserUsecase from './update-user';
 import { ObjectId } from 'typeorm';
+import User from '../../entities/user';
 
 describe('UpdateUserUsecase Tests', () => {
-  const userMock = mock<UserSchema>();
+  const userMock = mock<User>();
   const payloadMock = {
     id: mock<ObjectId>(),
     name: 'string',

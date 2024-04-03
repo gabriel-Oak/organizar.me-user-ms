@@ -10,7 +10,7 @@ export default function buildRoutes(
   controllers: any[]
 ) {
   controllers.forEach((controller) => {
-    const controllerInstance = createContainer().get<typeof controller>(controller.name);
+    const controllerInstance: any = createContainer().get<typeof controller>(controller.name);
 
     let path: string;
     if (Reflect.hasMetadata(SYMBOL_CONTROLLER, controllerInstance.constructor)) {

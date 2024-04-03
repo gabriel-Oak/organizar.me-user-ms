@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="330eb07d-b6b4-5a71-a579-833ecebe419f")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4b71437f-955c-559e-b224-9fea194f60f0")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -29,7 +29,6 @@ let UpdateUserUsecase = class UpdateUserUsecase {
         const passIsValid = payload.password && await user.comparePasswords(payload.password);
         if (!passIsValid)
             return new types_1.Left(new types_2.UpdateUserInvalidPassError());
-        user.updateProps(payload);
         return await this.userDatasource.update(user);
     }
 };
@@ -40,4 +39,4 @@ UpdateUserUsecase = __decorate([
 ], UpdateUserUsecase);
 exports.default = UpdateUserUsecase;
 //# sourceMappingURL=update-user.js.map
-//# debugId=330eb07d-b6b4-5a71-a579-833ecebe419f
+//# debugId=4b71437f-955c-559e-b224-9fea194f60f0

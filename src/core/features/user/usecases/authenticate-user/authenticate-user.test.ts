@@ -1,9 +1,10 @@
-import { mock, mockReset } from 'jest-mock-extended';
+import 'reflect-metadata';
+import { mock } from 'jest-mock-extended';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
 import { AuthenticateInvalidError, AuthenticateUserNotFoundError, AuthenticateUserWrongPasswordError, IAuthenticateUserUsecase, LoginPayload } from './types'
 import AuthenticateUserUsecase from './authenticate-user'
 import { Left, Right } from '../../../../utils/types';
-import UserSchema from '../../schemas/user-schema';
+import User from '../../entities/user';
 
 describe('AuthenticateUserUsecase Tests', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
@@ -12,17 +13,11 @@ describe('AuthenticateUserUsecase Tests', () => {
     email: 'hellomyboy@gmail.com',
     password: '123ohmygod'
   };
-  const userMock = new UserSchema({
+
+  const userMock = new User({
     ...payloadMock,
-    name: 'Jhon Doe'
-  });
-
-  beforeAll(async () => {
-    await userMock.hashPassword();
-  });
-
-  beforeEach(() => {
-    mockReset(userDatasourceMock);
+    name: 'Jhon Doe',
+    password: '123ohmygod'
   });
 
   it('Should return when datasource fail', async () => {
@@ -52,12 +47,13 @@ describe('AuthenticateUserUsecase Tests', () => {
   });
 
   it('Should authenticate user', async () => {
+    await userMock.hashPassword();
     userDatasourceMock.findByEmail
       .mockImplementation(async () => new Right(userMock));
     const result = await usecase.execute(payloadMock);
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(UserSchema);
+    expect((result as Right<unknown>).success).toBeInstanceOf(User);
   });
 
   it('Should return invalid data error', async () => {
