@@ -1,7 +1,7 @@
 import BaseError from '../../../../utils/errors/base-error';
 import { Either } from '../../../../utils/types';
 import { InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserSchema from '../../schemas/user-schema';
+import User from '../../entities/user';
 
 export interface LoginPayload {
   email: string;
@@ -29,5 +29,5 @@ export type authenticateUserErrors = InternalUserDatasourceError
 | AuthenticateInvalidError;
 
 export interface IAuthenticateUserUsecase {
-  execute: (payload: LoginPayload) => Promise<Either<authenticateUserErrors, UserSchema>>
+  execute: (payload: LoginPayload) => Promise<Either<authenticateUserErrors, User>>
 }

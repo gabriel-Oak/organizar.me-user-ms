@@ -1,7 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify';
 import Controller from '../../../utils/decorators/controller/controller';
 import HttpError from '../../../utils/errors/http-error';
-import UserSchema, { UserSchemaProps } from '../schemas/user-schema';
 import { IAuthenticateUserUsecase, LoginPayload } from '../usecases/authenticate-user/types';
 import { IDecodeUserTokenUsecase } from '../usecases/decode-user-token/types';
 import { IInsertUserUsecase } from '../usecases/insert-user/types';
@@ -9,7 +8,7 @@ import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
 import { IValidateUserUsecase } from '../usecases/validate-user/types';
 import privateRoute from '../../../utils/decorators/controller/private-route';
 import { ChangePasswordBody, IChangePasswordUsecase } from '../usecases/change-password/types';
-import { IUpdateUserUsecase, updateUserSchemaProps } from '../usecases/update-user/types';
+import { IUpdateUserUsecase, updateUserProps } from '../usecases/update-user/types';
 import Post from '../../../utils/decorators/controller/post';
 import Get from '../../../utils/decorators/controller/get';
 import Patch from '../../../utils/decorators/controller/patch';
@@ -17,6 +16,7 @@ import { inject } from 'inversify';
 import { IRemoveUserUsecase } from '../usecases/remove-user/types';
 import Del from '../../../utils/decorators/controller/del';
 import { IListUsersUsecase, ListUsersIncompleteResult } from '../usecases/list-users/types';
+import User, { UserProps } from '../entities/user';
 
 @Controller('/user')
 export default class UserController {
@@ -71,7 +71,7 @@ export default class UserController {
 
   @Post('/new')
   async new(req: FastifyRequest, reply: FastifyReply) {
-    const payload = req.body as Omit<UserSchemaProps, 'id'>;
+    const payload = req.body as Omit<UserProps, 'id'>;
     const validate = this.validateUser.execute(payload);
     if (validate.isError) {
       const error = new HttpError({
@@ -116,13 +116,13 @@ export default class UserController {
 
   @Get('/decode')
   @privateRoute()
-  async decode(req: FastifyRequest, reply: FastifyReply, user: UserSchema) {
-    return await reply.send(user.getProps());
+  async decode(req: FastifyRequest, reply: FastifyReply, user: User) {
+    return await reply.send(user);
   }
 
   @Patch('/change-password')
   @privateRoute()
-  async changeUserPassword(req: FastifyRequest, reply: FastifyReply, user: UserSchema) {
+  async changeUserPassword(req: FastifyRequest, reply: FastifyReply, user: User) {
     const { body } = req as { body: ChangePasswordBody };
     const result = await this.changePassword.execute({
       ...body,
@@ -139,8 +139,8 @@ export default class UserController {
 
   @Patch('/update-user')
   @privateRoute()
-  async update(req: FastifyRequest, reply: FastifyReply, user: UserSchema) {
-    const { body } = req as { body: updateUserSchemaProps };
+  async update(req: FastifyRequest, reply: FastifyReply, user: User) {
+    const { body } = req as { body: updateUserProps };
     const result = await this.updateUser.execute(user, body);
     if (!result.isError) return await reply.send();
 
@@ -151,7 +151,7 @@ export default class UserController {
 
   @Del('/remove')
   @privateRoute()
-  async remove(_: FastifyRequest, reply: FastifyReply, user: UserSchema) {
+  async remove(_: FastifyRequest, reply: FastifyReply, user: User) {
     const result = await this.removeUser.execute(user);
     if (!result.isError) return await reply.send();
 

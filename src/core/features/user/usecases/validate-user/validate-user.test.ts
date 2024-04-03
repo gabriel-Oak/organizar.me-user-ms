@@ -1,11 +1,12 @@
+import 'reflect-metadata';
 import { Left, Right } from '../../../../utils/types';
-import { UserSchemaProps } from '../../schemas/user-schema';
 import { IValidateUserUsecase } from './types';
 import ValidateUserUsecase from './validate-user';
+import { UserProps } from '../../entities/user';
 
 describe('ValidadeUserUsecase tests', () => {
   const usecase: IValidateUserUsecase = new ValidateUserUsecase();
-  const payloadMock: UserSchemaProps = {
+  const payloadMock: UserProps = {
     email: 'hellomyboy@gmail.com',
     name: 'Jhon Doe',
     password: '123ohmygod'

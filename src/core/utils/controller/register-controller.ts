@@ -1,5 +1,4 @@
 import { FastifyInstance } from 'fastify';
-import UserSchema from '../../features/user/schemas/user-schema';
 import { IDecodeUserTokenUsecase, decodeUserTokenErrors } from '../../features/user/usecases/decode-user-token/types';
 import HttpError from '../errors/http-error';
 import createLoggerService from '../services/logger-service';
@@ -7,6 +6,7 @@ import { Either } from '../types';
 import { SYMBOL_DELETE, SYMBOL_GET, SYMBOL_PATCH, SYMBOL_POST, SYMBOL_PRIVATE, SYMBOL_PUT } from '../decorators/controller/symbols';
 import { controllerAction, IControllerActionMeta } from '../decorators/controller/types';
 import createContainer from '../decorators/container';
+import User from '../../features/user/entities/user';
 
 export default function registerController(
   path: string,
@@ -31,11 +31,11 @@ export default function registerController(
         const actionPath = p === '/' ? '' : p
         app[method](`${path}${actionPath}`, async (req, rep) => {
           try {
-            let user: UserSchema;
+            let user: User;
             if (privateRoutes?.includes(action)) {
               const decoder = createContainer().get<IDecodeUserTokenUsecase>('IDecodeUserTokenUsecase');
               const { auth } = req.headers;
-              const decodeResult: Either<decodeUserTokenErrors, UserSchema> = await decoder.execute(String(auth));
+              const decodeResult: Either<decodeUserTokenErrors, User> = await decoder.execute(String(auth));
 
               if (decodeResult.isError) {
                 const error = new HttpError({

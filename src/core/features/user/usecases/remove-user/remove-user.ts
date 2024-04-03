@@ -1,8 +1,8 @@
 import { IRemoveUserUsecase } from './types';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import UserSchema from '../../schemas/user-schema';
 import { inject } from 'inversify';
 import Injectable from '../../../../utils/decorators/injectable';
+import User from '../../entities/user';
 
 @Injectable('IRemoveUserUsecase')
 export default class RemoveUserUsecase implements IRemoveUserUsecase {
@@ -11,7 +11,7 @@ export default class RemoveUserUsecase implements IRemoveUserUsecase {
     private readonly datasource: IInternalUserDatasource
   ) { }
 
-  async execute(user: UserSchema) {
+  async execute(user: User) {
     const result = await this.datasource.remove(user.id!);
     return result;
   }

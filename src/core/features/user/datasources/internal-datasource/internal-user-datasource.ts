@@ -1,5 +1,5 @@
 import { ILoggerService } from '../../../../utils/services/logger-service/types';
-import { Left, Right } from '../../../../utils/types';
+import { Either, Left, Right } from '../../../../utils/types';
 import { DataSource, Repository } from 'typeorm';
 import UserSchema from '../../schemas/user-schema';
 import { IInternalUserDatasource, InternalUserDatasourceError } from './types';
@@ -47,7 +47,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
   async findByEmail(email: string) {
     try {
       const user = await this.userRepository.findOneBy({ email });
-      return new Right(user);
+      return new Right(user ? new User(user?.getProps()) : null);
     } catch (e) {
       const error = new InternalUserDatasourceError(
         (e as any).message || `Oops, desculpe, tivemos um problema buscando por ${email}`,
@@ -58,13 +58,15 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async findById(userId: ObjectId) {
+  async findById(userId: string) {
     try {
-      const user = await this.userRepository.findOneBy({ id: userId });
-      return new Right(user);
+      const user = await this.userRepository.findOneBy({
+        _id: new ObjectId(userId)
+      } as any);
+      return new Right(user ? new User(user.getProps()) : null);
     } catch (e) {
       const error = new InternalUserDatasourceError(
-        (e as any).message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId.toString()}`,
+        (e as any).message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId}`,
         { ...(e as any), userId }
       );
       this.logger.error(error.message, error);
@@ -72,11 +74,17 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async save(user: UserSchema) {
+  async save(user: User): Promise<Either<InternalUserDatasourceError, User>> {
     try {
-      const result = await this.userRepository.save(user);
+      const result = await this.userRepository.save(new UserSchema({
+        ...user,
+        id: undefined
+      }));
       result.password = undefined;
-      return new Right(result);
+      return new Right(new User({
+        ...result,
+        id: result.id?.toString()
+      }));
     } catch (e) {
       const error = new InternalUserDatasourceError(
         (e as any).message || `Opa, foi mal tivemos um problema ao salvar o usuário ${user.name}`,
@@ -87,7 +95,7 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async update(user: UserSchema) {
+  async update(user: User) {
     try {
       await this.userRepository.update(user.id!, user);
       return new Right(null);
@@ -101,16 +109,19 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
     }
   }
 
-  async remove(userId: ObjectId) {
+  async remove(userId: string) {
     try {
-      const user = await this.userRepository.findOneBy({ id: new ObjectId(userId) });
+      const user = await this.userRepository.findOneBy({ _id: new ObjectId(userId) } as any);
       if (!user) throw new Error(`Oops, usuário ${userId.toString()} não encontrado, pode já ter sido deletado`);
 
       const result = await this.userRepository.remove(user);
-      return new Right(result);
+      return new Right(new User({
+        ...result,
+        id: result.id?.toString()
+      }));
     } catch (e) {
       const error = new InternalUserDatasourceError(
-        (e as any).message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId.toString()}`,
+        (e as any).message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId}`,
         { ...(e as any), userId }
       );
       this.logger.error(error.message, error);

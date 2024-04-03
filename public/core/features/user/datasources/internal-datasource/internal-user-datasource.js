@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="8f813b67-516f-5616-9510-3a1da0aacde3")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4889e263-047a-5dc4-bf8b-6ae765beda39")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -52,7 +52,7 @@ let InternalUserDatasource = class InternalUserDatasource {
     async findByEmail(email) {
         try {
             const user = await this.userRepository.findOneBy({ email });
-            return new types_1.Right(user);
+            return new types_1.Right(user ? new user_1.default(user?.getProps()) : null);
         }
         catch (e) {
             const error = new types_2.InternalUserDatasourceError(e.message || `Oops, desculpe, tivemos um problema buscando por ${email}`, { ...e, email });
@@ -62,20 +62,28 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async findById(userId) {
         try {
-            const user = await this.userRepository.findOneBy({ id: userId });
-            return new types_1.Right(user);
+            const user = await this.userRepository.findOneBy({
+                _id: new mongodb_1.ObjectId(userId)
+            });
+            return new types_1.Right(user ? new user_1.default(user.getProps()) : null);
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId.toString()}`, { ...e, userId });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema buscando pelo usuário ${userId}`, { ...e, userId });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
     }
     async save(user) {
         try {
-            const result = await this.userRepository.save(user);
+            const result = await this.userRepository.save(new user_schema_1.default({
+                ...user,
+                id: undefined
+            }));
             result.password = undefined;
-            return new types_1.Right(result);
+            return new types_1.Right(new user_1.default({
+                ...result,
+                id: result.id?.toString()
+            }));
         }
         catch (e) {
             const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${user.name}`, { ...e, user });
@@ -96,14 +104,17 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async remove(userId) {
         try {
-            const user = await this.userRepository.findOneBy({ id: new mongodb_1.ObjectId(userId) });
+            const user = await this.userRepository.findOneBy({ _id: new mongodb_1.ObjectId(userId) });
             if (!user)
                 throw new Error(`Oops, usuário ${userId.toString()} não encontrado, pode já ter sido deletado`);
             const result = await this.userRepository.remove(user);
-            return new types_1.Right(result);
+            return new types_1.Right(new user_1.default({
+                ...result,
+                id: result.id?.toString()
+            }));
         }
         catch (e) {
-            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId.toString()}`, { ...e, userId });
+            const error = new types_2.InternalUserDatasourceError(e.message || `Opa, foi mal tivemos um problema ao salvar o usuário ${userId}`, { ...e, userId });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
         }
@@ -118,4 +129,4 @@ InternalUserDatasource = __decorate([
 ], InternalUserDatasource);
 exports.default = InternalUserDatasource;
 //# sourceMappingURL=internal-user-datasource.js.map
-//# debugId=8f813b67-516f-5616-9510-3a1da0aacde3
+//# debugId=4889e263-047a-5dc4-bf8b-6ae765beda39

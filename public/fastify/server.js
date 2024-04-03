@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="eb7d6208-f779-5be3-ace6-902b4a25a2fe")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="f7addbc6-e036-5eec-bdc8-eb7a917621d6")}catch(e){}}();
 
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
@@ -50,7 +50,7 @@ Sentry.init({
 async function startServer() {
     const container = (0, container_1.default)();
     const logger = container.get('ILoggerService');
-    const port = process_1.env.PORT ?? 8080;
+    const port = process_1.env.PORT ?? 3001;
     const app = await (0, app_1.default)();
     await app.listen({ port: +port, host: '0.0.0.0' })
         .catch((e) => logger.error('Error starting server', e));
@@ -59,4 +59,4 @@ async function startServer() {
 }
 exports.default = startServer;
 //# sourceMappingURL=server.js.map
-//# debugId=eb7d6208-f779-5be3-ace6-902b4a25a2fe
+//# debugId=f7addbc6-e036-5eec-bdc8-eb7a917621d6

@@ -1,7 +1,12 @@
 import { inject } from 'inversify';
 import Injectable from '../../../../utils/decorators/injectable';
 import { IInternalUserDatasource } from '../../datasources/internal-datasource/types';
-import { IListUsersUsecase, ListUsersCompleteResult, ListUsersIncompleteResult, ListUsersValidationError } from './types';
+import {
+  IListUsersUsecase,
+  ListUsersCompleteResult,
+  ListUsersIncompleteResult,
+  ListUsersValidationError
+} from './types';
 import { Left, Right } from '../../../../utils/types';
 
 @Injectable('IListUsersUsecase')

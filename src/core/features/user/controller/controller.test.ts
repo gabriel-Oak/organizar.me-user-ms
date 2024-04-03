@@ -4,7 +4,6 @@ import { mock, mockDeep, mockReset } from 'jest-mock-extended';
 import { IInsertUserUsecase, InsertUserAlreadyExist } from '../usecases/insert-user/types';
 import { IValidateUserUsecase, ValidateUserError } from '../usecases/validate-user/types';
 import { ISignUserTokenUsecase } from '../usecases/sign-user-token/types';
-import UserSchema, { UserSchemaProps } from '../schemas/user-schema';
 import UserController from './controller';
 import { Left, Right } from '../../../utils/types';
 import HttpError from '../../../utils/errors/http-error';
@@ -17,10 +16,10 @@ import { ChangePasswordInvalidOldPassError, ChangePasswordInvalidPassError, ICha
 import { IUpdateUserUsecase, UpdateUserInvalidPassError } from '../usecases/update-user/types';
 import { IRemoveUserUsecase } from '../usecases/remove-user/types';
 import { IListUsersUsecase, ListUsersCompleteResult, ListUsersIncompleteResult, ListUsersValidationError } from '../usecases/list-users/types';
-import User from '../entities/user';
+import User, { UserProps } from '../entities/user';
 
 describe('UserController Tests', () => {
-  const body: UserSchemaProps = {
+  const body: UserProps = {
     email: 'hellomyboy@gmail.com',
     name: 'Jhon Doe',
     password: '123ohmygod'
@@ -38,7 +37,7 @@ describe('UserController Tests', () => {
   const removeUserMock = mock<IRemoveUserUsecase>();
   const listUsersMock = mock<IListUsersUsecase>();
 
-  const userSchemaMock = new UserSchema({ ...body, password: undefined });
+  const userSchemaMock = new User({ ...body, password: undefined });
   const userMock = new User({ ...body, id: '1236123123' });
   const auth = 'iaehdiosahd8aksjhdjahsd8hjsakh.ajsihdkasdkashdkhaskdjhaksd.jkasdjkhaskdhaksdhkasjdha';
 
@@ -73,7 +72,10 @@ describe('UserController Tests', () => {
   it('Should return validation error listing users', async () => {
     listUsersMock.execute
       .mockImplementation(async () => new Left(new ListUsersValidationError()));
-    await controller.list(requestMock, replyMock);
+    await controller.list({
+      ...requestMock,
+      query: { userIds: '123123124213123,123213124123131' }
+    }, replyMock);
 
     expect(replyMock.code).toHaveBeenCalledWith(400);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
@@ -85,7 +87,10 @@ describe('UserController Tests', () => {
   it('Should return datasource error listing users', async () => {
     listUsersMock.execute
       .mockImplementation(async () => new Left(new InternalUserDatasourceError('Oops')));
-    await controller.list(requestMock, replyMock);
+    await controller.list({
+      ...requestMock,
+      query: { userIds: '123123124213123,123213124123131' }
+    }, replyMock);
 
     expect(replyMock.code).toHaveBeenCalledWith(500);
     expect(replyMock.send).toHaveBeenCalledWith(new HttpError({
@@ -101,7 +106,10 @@ describe('UserController Tests', () => {
     });
 
     listUsersMock.execute.mockImplementation(async () => new Right(resultMock));
-    await controller.list(requestMock, replyMock);
+    await controller.list({
+      ...requestMock,
+      query: { userIds: '123123124213123,123213124123131' }
+    }, replyMock);
 
     expect(replyMock.code).toHaveBeenCalledWith(207);
     expect(replyMock.send).toHaveBeenCalledWith(resultMock);
@@ -110,7 +118,10 @@ describe('UserController Tests', () => {
   it('Should return result listing users', async () => {
     const resultMock = new ListUsersCompleteResult([userMock]);
     listUsersMock.execute.mockImplementation(async () => new Right(resultMock));
-    await controller.list(requestMock, replyMock);
+    await controller.list({
+      ...requestMock,
+      query: { userIds: '123123124213123,123213124123131' }
+    }, replyMock);
 
     expect(replyMock.code).toHaveBeenCalledWith(200);
     expect(replyMock.send).toHaveBeenCalledWith(resultMock);
@@ -146,13 +157,13 @@ describe('UserController Tests', () => {
     validateUserMock.execute
       .mockImplementation(() => new Right(null));
     insertUserMock.execute
-      .mockImplementation(async () => new Right(new UserSchema({ ...body, password: undefined })));
+      .mockImplementation(async () => new Right(new User({ ...body, password: undefined })));
     signUserTokenMock.execute
       .mockImplementation(() => auth);
     await controller.new(requestMock, replyMock);
 
     expect(replyMock.send).toHaveBeenCalledWith({
-      user: new UserSchema({ ...body, password: undefined }),
+      user: new User({ ...body, password: undefined }),
       auth
     });
   });
@@ -209,7 +220,7 @@ describe('UserController Tests', () => {
   it('Should decode user', async () => {
     decodeUserTokenMock.execute.mockImplementation(async () => new Right(userSchemaMock));
     await controller.decode({ ...requestMock, headers: { auth } }, replyMock, userSchemaMock);
-    expect(replyMock.send).toHaveBeenCalledWith(userSchemaMock.getProps());
+    expect(replyMock.send).toHaveBeenCalledWith(userSchemaMock);
   });
 
   it('Should change user password', async () => {
@@ -310,7 +321,10 @@ describe('UserController Tests', () => {
   it('Should return ok removing user', async () => {
     removeUserMock.execute
       .mockImplementation(async () => new Right(userSchemaMock));
-    await controller.remove({ ...requestMock, headers: { auth } }, replyMock, userSchemaMock);
+    await controller.remove({
+      ...requestMock,
+      headers: { auth }
+    }, replyMock, userSchemaMock);
     expect(replyMock.send).toHaveBeenCalled();
     expect(replyMock.code).not.toHaveBeenCalled();
   });

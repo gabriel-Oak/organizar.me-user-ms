@@ -1,5 +1,5 @@
-import UserSchema from '../../schemas/user-schema';
+import User from '../../entities/user';
 
 export interface ISignUserTokenUsecase {
-  execute: (user: UserSchema) => string;
+  execute: (user: User) => string;
 }

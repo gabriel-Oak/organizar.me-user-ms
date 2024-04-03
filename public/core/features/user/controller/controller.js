@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="7aafb8db-ddc0-5a87-b868-24f3492bb689")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="dccca8c3-738c-504a-b0e1-4a7bc2e84d1b")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -19,7 +19,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const controller_1 = __importDefault(require("../../../utils/decorators/controller/controller"));
 const http_error_1 = __importDefault(require("../../../utils/errors/http-error"));
-const user_schema_1 = __importDefault(require("../schemas/user-schema"));
 const private_route_1 = __importDefault(require("../../../utils/decorators/controller/private-route"));
 const post_1 = __importDefault(require("../../../utils/decorators/controller/post"));
 const get_1 = __importDefault(require("../../../utils/decorators/controller/get"));
@@ -27,6 +26,7 @@ const patch_1 = __importDefault(require("../../../utils/decorators/controller/pa
 const inversify_1 = require("inversify");
 const del_1 = __importDefault(require("../../../utils/decorators/controller/del"));
 const types_1 = require("../usecases/list-users/types");
+const user_1 = __importDefault(require("../entities/user"));
 let UserController = class UserController {
     constructor(validateUser, insertUser, signUserToken, authenticateUser, decodeUserToken, changePassword, updateUser, removeUser, listUsers) {
         this.validateUser = validateUser;
@@ -93,7 +93,7 @@ let UserController = class UserController {
         return await reply.send({ user, auth });
     }
     async decode(req, reply, user) {
-        return await reply.send(user.getProps());
+        return await reply.send(user);
     }
     async changeUserPassword(req, reply, user) {
         const { body } = req;
@@ -149,28 +149,28 @@ __decorate([
     (0, get_1.default)('/decode'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "decode", null);
 __decorate([
     (0, patch_1.default)('/change-password'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "changeUserPassword", null);
 __decorate([
     (0, patch_1.default)('/update-user'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "update", null);
 __decorate([
     (0, del_1.default)('/remove'),
     (0, private_route_1.default)(),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, user_schema_1.default]),
+    __metadata("design:paramtypes", [Object, Object, user_1.default]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "remove", null);
 UserController = __decorate([
@@ -188,4 +188,4 @@ UserController = __decorate([
 ], UserController);
 exports.default = UserController;
 //# sourceMappingURL=controller.js.map
-//# debugId=7aafb8db-ddc0-5a87-b868-24f3492bb689
+//# debugId=dccca8c3-738c-504a-b0e1-4a7bc2e84d1b

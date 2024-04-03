@@ -4,9 +4,9 @@ import { IInternalUserDatasource, InternalUserDatasourceError } from '../../data
 import { DecodeUserInvalidTokenError, DecodeUserNotFoundError, IDecodeUserTokenUsecase } from './types';
 import DecodeUserTokenDatasource from './decode-user-token';
 import { Left, Right } from '../../../../utils/types';
-import UserSchema from '../../schemas/user-schema';
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET } from '../../../../utils/constants';
+import User from '../../entities/user';
 
 describe('DecodeUserTokenUsecase Test', () => {
   const userDatasourceMock = mock<IInternalUserDatasource>();
@@ -45,10 +45,11 @@ describe('DecodeUserTokenUsecase Test', () => {
   });
 
   it('Should decode succefuly', async () => {
-    userDatasourceMock.findById.mockImplementation(async () => new Right(new UserSchema()));
+    userDatasourceMock.findById
+      .mockImplementation(async () => new Right(new User({} as any)));
     const result = await usecase.execute(token);
 
     expect(result).toBeInstanceOf(Right);
-    expect((result as Right<unknown>).success).toBeInstanceOf(UserSchema);
+    expect((result as Right<unknown>).success).toBeInstanceOf(User);
   });
 });

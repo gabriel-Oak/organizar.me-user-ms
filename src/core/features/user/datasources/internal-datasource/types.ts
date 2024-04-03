@@ -1,7 +1,5 @@
-import { ObjectId } from 'typeorm';
 import BaseError from '../../../../utils/errors/base-error';
 import { Either } from '../../../../utils/types';
-import UserSchema from '../../schemas/user-schema';
 import User from '../../entities/user';
 
 export class InternalUserDatasourceError extends BaseError {
@@ -9,10 +7,10 @@ export class InternalUserDatasourceError extends BaseError {
 }
 
 export interface IInternalUserDatasource {
-  findByEmail: (email: string) => Promise<Either<InternalUserDatasourceError, UserSchema | null>>;
-  findById: (userId: ObjectId) => Promise<Either<InternalUserDatasourceError, UserSchema | null>>;
-  save: (user: UserSchema) => Promise<Either<InternalUserDatasourceError, UserSchema>>;
-  remove: (userId: ObjectId) => Promise<Either<InternalUserDatasourceError, UserSchema>>;
-  update: (user: UserSchema) => Promise<Either<InternalUserDatasourceError, null>>;
+  findByEmail: (email: string) => Promise<Either<InternalUserDatasourceError, User | null>>;
+  findById: (userId: string) => Promise<Either<InternalUserDatasourceError, User | null>>;
+  save: (user: User) => Promise<Either<InternalUserDatasourceError, User>>;
+  remove: (userId: string) => Promise<Either<InternalUserDatasourceError, User>>;
+  update: (user: User) => Promise<Either<InternalUserDatasourceError, null>>;
   findManyByIds: (userIds: string[]) => Promise<Either<InternalUserDatasourceError, User[]>>;
 }

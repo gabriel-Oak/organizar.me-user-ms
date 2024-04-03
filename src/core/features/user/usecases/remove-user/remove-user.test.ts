@@ -1,14 +1,15 @@
+import 'reflect-metadata';
 import { mock, mockReset } from 'jest-mock-extended';
-import UserSchema from '../../schemas/user-schema';
 import { IInternalUserDatasource, InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
 import RemoveUserUsecase from './remove-user';
 import { IRemoveUserUsecase } from './types';
 import { Left, Right } from '../../../../utils/types';
+import User from '../../entities/user';
 
 describe('RemoveUserUsecase Tests', () => {
   const datasourceMock = mock<IInternalUserDatasource>();
   const usecase: IRemoveUserUsecase = new RemoveUserUsecase(datasourceMock);
-  const payloadMock = mock<UserSchema>({ name: 'test' });
+  const payloadMock = mock<User>({ name: 'test' });
 
   beforeEach(() => {
     mockReset(datasourceMock);

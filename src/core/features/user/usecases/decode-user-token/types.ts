@@ -1,7 +1,7 @@
 import BaseError from '../../../../utils/errors/base-error';
 import { Either } from '../../../../utils/types';
 import { InternalUserDatasourceError } from '../../datasources/internal-datasource/types';
-import UserSchema from '../../schemas/user-schema';
+import User from '../../entities/user';
 
 export class DecodeUserInvalidTokenError extends BaseError {
   public readonly type = 'decode-user-invalid-token';
@@ -22,5 +22,5 @@ export type decodeUserTokenErrors = DecodeUserInvalidTokenError
 | InternalUserDatasourceError
 
 export interface IDecodeUserTokenUsecase {
-  execute: (token: string) => Promise<Either<decodeUserTokenErrors, UserSchema>>;
+  execute: (token: string) => Promise<Either<decodeUserTokenErrors, User>>;
 }
