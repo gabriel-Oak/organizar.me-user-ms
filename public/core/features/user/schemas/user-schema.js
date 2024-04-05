@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="ed04622b-9e8d-5f79-8faa-c3a73cbb9ab2")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="1b793314-dc90-5453-95bc-02b03d9c755e")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -34,7 +34,8 @@ let UserSchema = class UserSchema {
         return {
             id: this.id?.toString(),
             name: this.name,
-            email: this.email
+            email: this.email,
+            password: this.password
         };
     }
     updateProps(props) {
@@ -83,4 +84,4 @@ UserSchema = __decorate([
 ], UserSchema);
 exports.default = UserSchema;
 //# sourceMappingURL=user-schema.js.map
-//# debugId=ed04622b-9e8d-5f79-8faa-c3a73cbb9ab2
+//# debugId=1b793314-dc90-5453-95bc-02b03d9c755e

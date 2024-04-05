@@ -25,7 +25,7 @@ describe('UpdateUserUsecase Tests', () => {
 
   it('Should validate invalid password', async () => {
     userMock.comparePasswords.mockImplementation(async () => false);
-    const result = await usecase.execute(userMock, payloadMock);
+    const result = await usecase.execute(userMock, { ...payloadMock });
 
     expect(result).toBeInstanceOf(Left);
     expect((result as Left<unknown>).error).toBeInstanceOf(UpdateUserInvalidPassError);
@@ -34,7 +34,7 @@ describe('UpdateUserUsecase Tests', () => {
   it('Should deal with datasource error', async () => {
     userMock.comparePasswords.mockImplementation(async () => true);
     datasourceMock.update.mockImplementation(async () => new Left(new InternalUserDatasourceError('')));
-    const result = await usecase.execute(userMock, payloadMock);
+    const result = await usecase.execute(userMock, { ...payloadMock });
 
     expect(result).toBeInstanceOf(Left);
     expect((result as Left<unknown>).error).toBeInstanceOf(InternalUserDatasourceError);
@@ -44,7 +44,8 @@ describe('UpdateUserUsecase Tests', () => {
     userMock.comparePasswords.mockImplementation(async () => true);
     datasourceMock.update
       .mockImplementation(async () => new Right(null));
-    const result = await usecase.execute(userMock, payloadMock);
+    const result = await usecase.execute(userMock, { ...payloadMock });
+    console.log(result);
 
     expect(result).toBeInstanceOf(Right);
   });

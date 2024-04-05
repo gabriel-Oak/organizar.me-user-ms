@@ -11,7 +11,7 @@ describe('InternalUserDatasource Tests', () => {
   const repositoryMock = mock<Repository<UserSchema>>();
   const loggerMock = mock<ILoggerService>();
   const userMock = new UserSchema();
-  const saveMock = mock<User>();
+  const saveMock = mock<User>({ id: '660b3b8193fa2af84dc04cd6' });
   const datasourceMock = mock<DataSource>();
   const mongoRepositoryMock = mock<MongoRepository<UserSchema>>();
 

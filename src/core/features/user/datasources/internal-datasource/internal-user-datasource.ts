@@ -33,8 +33,6 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
 
       return new Right(users.map((user) => new User(user.getProps())));
     } catch (e: any) {
-      console.log(e);
-
       const error = new InternalUserDatasourceError(
         e.message || `Oops, desculpe, tivemos um problema buscando por (${userIds.join(', ')})`,
         { ...e, userIds }
@@ -97,7 +95,8 @@ export default class InternalUserDatasource implements IInternalUserDatasource {
 
   async update(user: User) {
     try {
-      await this.userRepository.update(user.id!, user);
+      const userSchema = new UserSchema({ ...user, id: new ObjectId(user.id) });
+      await this.userRepository.update(new ObjectId(user.id), userSchema);
       return new Right(null);
     } catch (e) {
       const error = new InternalUserDatasourceError(

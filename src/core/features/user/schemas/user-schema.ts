@@ -57,7 +57,8 @@ export default class UserSchema implements UserSchemaProps {
     return {
       id: this.id?.toString(),
       name: this.name,
-      email: this.email
+      email: this.email,
+      password: this.password
     }
   }
 

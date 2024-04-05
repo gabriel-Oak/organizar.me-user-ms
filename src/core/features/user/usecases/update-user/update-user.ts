@@ -16,6 +16,9 @@ export default class UpdateUserUsecase implements IUpdateUserUsecase {
     const passIsValid = payload.password && await user.comparePasswords(payload.password);
     if (!passIsValid) return new Left(new UpdateUserInvalidPassError());
 
+    delete payload.password;
+    Object.assign(user, payload);
+
     return await this.userDatasource.update(user);
   }
 }

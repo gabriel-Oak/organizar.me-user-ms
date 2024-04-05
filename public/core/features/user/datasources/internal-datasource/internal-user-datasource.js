@@ -1,5 +1,5 @@
 "use strict";
-!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="4889e263-047a-5dc4-bf8b-6ae765beda39")}catch(e){}}();
+!function(){try{var e="undefined"!=typeof window?window:"undefined"!=typeof global?global:"undefined"!=typeof self?self:{},n=(new Error).stack;n&&(e._sentryDebugIds=e._sentryDebugIds||{},e._sentryDebugIds[n]="6d21f272-09f1-56b1-a991-208213676f3b")}catch(e){}}();
 
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -43,7 +43,6 @@ let InternalUserDatasource = class InternalUserDatasource {
             return new types_1.Right(users.map((user) => new user_1.default(user.getProps())));
         }
         catch (e) {
-            console.log(e);
             const error = new types_2.InternalUserDatasourceError(e.message || `Oops, desculpe, tivemos um problema buscando por (${userIds.join(', ')})`, { ...e, userIds });
             this.logger.error(error.message, error);
             return new types_1.Left(error);
@@ -93,7 +92,8 @@ let InternalUserDatasource = class InternalUserDatasource {
     }
     async update(user) {
         try {
-            await this.userRepository.update(user.id, user);
+            const userSchema = new user_schema_1.default({ ...user, id: new mongodb_1.ObjectId(user.id) });
+            await this.userRepository.update(new mongodb_1.ObjectId(user.id), userSchema);
             return new types_1.Right(null);
         }
         catch (e) {
@@ -129,4 +129,4 @@ InternalUserDatasource = __decorate([
 ], InternalUserDatasource);
 exports.default = InternalUserDatasource;
 //# sourceMappingURL=internal-user-datasource.js.map
-//# debugId=4889e263-047a-5dc4-bf8b-6ae765beda39
+//# debugId=6d21f272-09f1-56b1-a991-208213676f3b
